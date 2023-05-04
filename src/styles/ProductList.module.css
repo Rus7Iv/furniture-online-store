@@ -1,0 +1,55 @@
+.card {
+  border: 1px solid white;
+  border-radius: 20px;
+  width: 300px;
+  height: 300px;
+  margin: 20px;
+  padding: 20px;
+  text-align: center;
+  position: relative;
+  cursor: pointer;
+
+  box-shadow: 0 16px 70px -8px rgba(0, 0, 0, 0.25);
+  background-color: white;
+}
+
+.list {
+  display: flex;
+  flex-wrap: wrap;
+  width: 100%;
+}
+
+.label {
+  font-size: 30px;
+  font-weight: 500;
+
+  position: absolute;
+  bottom: 0;
+}
+
+.btn_add_to_cart {
+  border: none;
+  background-color: black;
+  color: white;
+  padding: 10px 20px;
+  border-radius: 10px;
+  cursor: pointer;
+  /* transition: background-color 0.2s ease-in-out;
+  box-shadow: 0px 4px 10px 5px rgba(0, 0, 0, 0.25); */
+
+  margin: 10px 15px;
+  position: absolute;
+  bottom: 0;
+  right: 0;
+}
+
+.btn_add_to_cart:hover {
+  background-color: yellow;
+  color: black;
+  box-shadow: inset 0px 5px 5px rgba(0, 0, 0, 0.25);
+}
+
+.add_to_cart {
+  display: flex;
+  align-items: center;
+}

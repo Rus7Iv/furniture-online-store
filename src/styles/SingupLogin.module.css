@@ -1,0 +1,14 @@
+.singup,
+.login {
+  padding: 20px;
+  /* align-items: center; */
+}
+.form {
+  float: left;
+  display: block;
+  width: 300px;
+  margin: 20px;
+}
+.form_input {
+  margin: 10px;
+}
