@@ -1,0 +1,124 @@
+/* CheckoutPage.module.css */
+.checkout_form {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  max-width: 800px;
+  margin: 0 auto;
+}
+
+.checkout_label {
+  font-size: 1.2rem;
+  margin-top: 1rem;
+}
+
+.checkout_input,
+.checkout_textarea {
+  padding: 0.5rem;
+  font-size: 1.2rem;
+  width: 100%;
+  margin-top: 0.5rem;
+  border: none;
+  border-bottom: 1px solid #ccc;
+}
+
+.checkout_input:focus,
+.checkout_textarea:focus {
+  outline: none;
+  border-bottom: 1px solid #222;
+}
+
+.checkout_button[type="submit"] {
+  background-color: #222;
+  color: #fff;
+  padding: 1rem 2rem;
+  border: none;
+  border-radius: 0.5rem;
+  font-size: 1.2rem;
+  margin-top: 2rem;
+  cursor: pointer;
+  transition: background-color 0.3s ease-in-out;
+  box-shadow: 0px 4px 10px 5px rgba(0, 0, 0, 0.25);
+}
+
+.checkout_button[type="submit"]:hover {
+  background-color: yellow;
+  color: black;
+  box-shadow: inset 0px 5px 5px rgba(0, 0, 0, 0.25);
+}
+
+.cart {
+  margin-top: 2rem;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+}
+
+.cart h2 {
+  font-size: 1.5rem;
+  margin-bottom: 1rem;
+}
+
+.cart .empty {
+  font-size: 1.2rem;
+}
+
+.items {
+  list-style: none;
+  padding: 0;
+  margin: 0;
+}
+
+.item {
+  display: flex;
+  align-items: center;
+  margin-bottom: 1rem;
+}
+
+.image {
+  flex: 1;
+  margin-right: 1rem;
+}
+
+.image img {
+  width: 100%;
+  height: auto;
+}
+
+.details {
+  flex: 2;
+}
+
+.name {
+  font-size: 1.2rem;
+  margin-bottom: 0.5rem;
+}
+
+.price {
+  font-size: 1rem;
+  color: #777;
+  margin: 0;
+}
+
+.total {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  margin-top: 2rem;
+}
+
+.total p {
+  font-size: 1.2rem;
+  margin-bottom: 1rem;
+}
+
+.auth {
+  font-size: 1rem;
+  margin-top: 1rem;
+  text-align: center;
+}
+
+.auth a {
+  color: #222;
+  text-decoration: underline;
+}

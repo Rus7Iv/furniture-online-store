@@ -3,6 +3,7 @@ import Navigation from "@/components/Navigation";
 import Footer from "@/components/Footer";
 import { useAuth } from "../lib/auth";
 import styles from "../styles/CartPage.module.css";
+import Link from "next/link";
 
 const CartPage = () => {
   const [cart, setCart] = useState([]);
@@ -115,7 +116,12 @@ const CartPage = () => {
             <div className={styles.total}>
               <p>Итого: {total.toLocaleString()} руб.</p>
               {isAuthenticated ? (
-                <button className={styles.button}>Оформить заказ</button>
+                <Link
+                  className={`${styles.button} ${styles.checkout_btn}`}
+                  href="/checkout"
+                >
+                  Оформить заказ
+                </Link>
               ) : (
                 <p className={styles.auth}>
                   Для оформления заказа необходимо{" "}
