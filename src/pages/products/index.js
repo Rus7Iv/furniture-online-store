@@ -15,6 +15,7 @@ function ProductsPage() {
   const [cart, setCart] = useState([]);
   const [showSuccessMessage, setShowSuccessMessage] = useState(false);
   const [showDuplicateMessage, setShowDuplicateMessage] = useState(false);
+  const [sortOrder, setSortOrder] = useState("");
 
   useEffect(() => {
     const fetchProducts = async () => {
@@ -68,11 +69,44 @@ function ProductsPage() {
     setShowDuplicateMessage(false);
   };
 
+  const sortProducts = (sortBy) => {
+    let sortedProducts = [...products];
+    switch (sortBy) {
+      case "price-asc":
+        sortedProducts.sort((a, b) => a.price - b.price);
+        setSortOrder("price-asc");
+        break;
+      case "price-desc":
+        sortedProducts.sort((a, b) => b.price - a.price);
+        setSortOrder("price-desc");
+        break;
+      case "name-asc":
+        sortedProducts.sort((a, b) => a.title.localeCompare(b.title));
+        setSortOrder("name-asc");
+        break;
+      default:
+        sortedProducts = products;
+        setSortOrder("");
+    }
+    setProducts(sortedProducts);
+  };
+
   return (
     <>
       <Navigation />
       <main>
         <h1>Каталог товаров</h1>
+        <div>
+          <select
+            value={sortOrder}
+            onChange={(event) => sortProducts(event.target.value)}
+          >
+            <option value="">Сортировать по:</option>
+            <option value="price-asc">Цене (по возрастанию)</option>
+            <option value="price-desc">Цене (по убыванию)</option>
+            <option value="name-asc">Названию (по алфавиту)</option>
+          </select>
+        </div>
         <ul className={styles.list}>
           {products.map((product) => (
             <div key={product.id} className={styles.card}>
@@ -111,7 +145,7 @@ function ProductsPage() {
           onClose={handleCloseDuplicateMessage}
         >
           <Alert onClose={handleCloseDuplicateMessage} severity="warning">
-            Товар уже в корзине
+            Товар уже добавлен в корзину
           </Alert>
         </Snackbar>
       </main>
