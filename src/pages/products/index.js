@@ -1,7 +1,7 @@
-import Link from "next/link";
-import { useState, useEffect } from "react";
 import { collection, getDocs } from "firebase/firestore";
 import { db } from "@/lib/firebase";
+import { useState, useEffect } from "react";
+import Link from "next/link";
 import styles from "../../styles/ProductList.module.css";
 import Navigation from "@/components/Navigation";
 import Footer from "@/components/Footer";
@@ -12,10 +12,13 @@ import { Alert } from "@mui/material";
 
 function ProductsPage() {
   const [products, setProducts] = useState([]);
+  const [filteredProducts, setFilteredProducts] = useState([]);
   const [cart, setCart] = useState([]);
   const [showSuccessMessage, setShowSuccessMessage] = useState(false);
   const [showDuplicateMessage, setShowDuplicateMessage] = useState(false);
   const [sortOrder, setSortOrder] = useState("");
+  const [categories, setCategories] = useState([]);
+  const [selectedCategory, setSelectedCategory] = useState("");
 
   useEffect(() => {
     const fetchProducts = async () => {
@@ -26,6 +29,12 @@ function ProductsPage() {
         ...doc.data(),
       }));
       setProducts(productList);
+      setFilteredProducts(productList);
+
+      const categories = [
+        ...new Set(productList.map((product) => product.category)),
+      ];
+      setCategories(categories);
     };
 
     fetchProducts();
@@ -70,7 +79,7 @@ function ProductsPage() {
   };
 
   const sortProducts = (sortBy) => {
-    let sortedProducts = [...products];
+    let sortedProducts = [...filteredProducts];
     switch (sortBy) {
       case "price-asc":
         sortedProducts.sort((a, b) => a.price - b.price);
@@ -88,7 +97,19 @@ function ProductsPage() {
         sortedProducts = products;
         setSortOrder("");
     }
-    setProducts(sortedProducts);
+    setFilteredProducts(sortedProducts);
+  };
+
+  const filterProductsByCategory = (categoryId) => {
+    if (categoryId === "") {
+      setFilteredProducts([...products]);
+    } else {
+      const filteredProducts = products.filter(
+        (product) => product.category === categoryId
+      );
+      setFilteredProducts(filteredProducts);
+    }
+    setSelectedCategory(categoryId);
   };
 
   return (
@@ -97,6 +118,17 @@ function ProductsPage() {
       <main>
         <h1>Каталог товаров</h1>
         <div>
+          <select
+            value={selectedCategory}
+            onChange={(event) => filterProductsByCategory(event.target.value)}
+          >
+            <option value="">Все категории</option>
+            {categories.map((category) => (
+              <option key={category} value={category}>
+                {category}
+              </option>
+            ))}
+          </select>
           <select
             value={sortOrder}
             onChange={(event) => sortProducts(event.target.value)}
@@ -108,7 +140,7 @@ function ProductsPage() {
           </select>
         </div>
         <ul className={styles.list}>
-          {products.map((product) => (
+          {filteredProducts.map((product) => (
             <div key={product.id} className={styles.card}>
               <Link
                 legacyBehavior
