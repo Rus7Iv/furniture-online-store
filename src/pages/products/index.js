@@ -7,8 +7,8 @@ import Navigation from "@/components/Navigation";
 import Footer from "@/components/Footer";
 import "slick-carousel/slick/slick.css";
 import "slick-carousel/slick/slick-theme.css";
-import { Snackbar } from "@mui/material";
-import { Alert } from "@mui/material";
+import CustomSnackbar from "@/components/CustomSnackbar";
+import ProductCard from "@/components/ProductCard";
 
 function ProductsPage() {
   const [products, setProducts] = useState([]);
@@ -141,45 +141,25 @@ function ProductsPage() {
         </div>
         <ul className={styles.list}>
           {filteredProducts.map((product) => (
-            <div key={product.id} className={styles.card}>
-              <Link
-                legacyBehavior
-                href={`/products/${product.id}`}
-                key={product.id}
-              >
-                <div>
-                  <h2>{product.title}</h2>
-                  <img src={product.image[0]} width={200} alt={product.title} />
-                </div>
-              </Link>
-              <p className={styles.label}>{product.price} ₽</p>
-              <button
-                onClick={() => addToCart(product)}
-                className={styles.btn_add_to_cart}
-              >
-                🛒
-              </button>
-            </div>
+            <ProductCard
+              key={product.id}
+              product={product}
+              addToCart={addToCart}
+            />
           ))}
         </ul>
-        <Snackbar
+        <CustomSnackbar
           open={showSuccessMessage}
-          autoHideDuration={3000}
-          onClose={handleCloseSuccessMessage}
-        >
-          <Alert onClose={handleCloseSuccessMessage} severity="success">
-            Товар успешно добавлен
-          </Alert>
-        </Snackbar>
-        <Snackbar
+          handleClose={handleCloseSuccessMessage}
+          severity="success"
+          message="Товар успешно добавлен"
+        />
+        <CustomSnackbar
           open={showDuplicateMessage}
-          autoHideDuration={3000}
-          onClose={handleCloseDuplicateMessage}
-        >
-          <Alert onClose={handleCloseDuplicateMessage} severity="warning">
-            Товар уже добавлен в корзину
-          </Alert>
-        </Snackbar>
+          handleClose={handleCloseDuplicateMessage}
+          severity="warning"
+          message="Товар уже добавлен в корзину"
+        />
       </main>
       <Footer />
     </>
