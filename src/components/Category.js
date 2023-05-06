@@ -1,90 +1,17 @@
-// import { useState, useEffect } from "react";
-// import { collection, getDocs } from "firebase/firestore";
-// import { db } from "@/lib/firebase";
-// import styles from "../styles/Category.module.css";
-// import Link from "next/link";
-// import ProductCard from "./ProductCard";
-
-// const Category = () => {
-//   const [categories, setCategories] = useState([]);
-//   const [selectedCategory, setSelectedCategory] = useState(null);
-//   const [products, setProducts] = useState([]);
-
-//   useEffect(() => {
-//     const fetchCategories = async () => {
-//       const categoriesRef = collection(db, "products");
-//       const querySnapshot = await getDocs(categoriesRef);
-//       const categorySet = new Set();
-//       querySnapshot.forEach((doc) => {
-//         const product = { id: doc.id, ...doc.data() };
-//         categorySet.add(product.category);
-//         setProducts((prevProducts) => [...prevProducts, product]);
-//       });
-//       setCategories(Array.from(categorySet));
-//     };
-//     fetchCategories();
-//   }, []);
-
-//   const handleCategoryClick = (category) => {
-//     setSelectedCategory(category);
-//   };
-
-//   const addToCart = (product) => {
-//     console.log("Добавить в корзину:", product);
-//   };
-
-//   return (
-//     <div>
-//       <h2>Категории</h2>
-//       <ul className={styles.list}>
-//         {categories.map(
-//           (
-//             category // удален key, так как элементы не создаются на основе массива продуктов
-//           ) => (
-//             <div
-//               key={category}
-//               className={styles.card}
-//               onClick={() => handleCategoryClick(category)}
-//             >
-//               {category}
-//             </div>
-//           )
-//         )}
-//       </ul>
-//       {selectedCategory && (
-//         <div key={selectedCategory}>
-//           <h2>{selectedCategory}</h2>
-//           <ul>
-//             {products
-//               .filter((product) => product.category === selectedCategory)
-//               .map((product) => (
-//                 <ProductCard
-//                   key={product.id} // добавлен уникальный идентификатор продукта в качестве ключа
-//                   product={product}
-//                   addToCart={() => addToCart(product)}
-//                 />
-//               ))}
-//           </ul>
-//           <Link href={`/products`}>Найти больше товаров в каталоге</Link>
-//         </div>
-//       )}
-//     </div>
-//   );
-// };
-
-// export default Category;
-
 import { useState, useEffect } from "react";
 import { collection, getDocs } from "firebase/firestore";
 import { db } from "@/lib/firebase";
 import styles from "../styles/Category.module.css";
 import Link from "next/link";
 import ProductCard from "./ProductCard";
+import CustomSnackbar from "./CustomSnackbar";
 
 const Category = () => {
   const [categories, setCategories] = useState([]);
   const [selectedCategory, setSelectedCategory] = useState(null);
   const [products, setProducts] = useState([]);
+  const [showSuccessMessage, setShowSuccessMessage] = useState(false);
+  const [showDuplicateMessage, setShowDuplicateMessage] = useState(false);
 
   useEffect(() => {
     const fetchProducts = async () => {
@@ -108,13 +35,46 @@ const Category = () => {
   };
 
   const addToCart = (product) => {
-    console.log("Добавить в корзину:", product);
+    const cart = JSON.parse(localStorage.getItem("cart")) || [];
+    const existingProduct = cart.find((item) => item.id === product.id);
+
+    if (existingProduct) {
+      handleDuplicateMessage();
+    } else {
+      cart.push({ ...product, quantity: 1 });
+      localStorage.setItem("cart", JSON.stringify(cart));
+      handleSuccessMessage();
+    }
+  };
+
+  const handleSuccessMessage = () => {
+    setShowSuccessMessage(true);
+  };
+
+  const handleCloseSuccessMessage = (event, reason) => {
+    if (reason === "clickaway") {
+      return;
+    }
+
+    setShowSuccessMessage(false);
+  };
+
+  const handleDuplicateMessage = () => {
+    setShowDuplicateMessage(true);
+  };
+
+  const handleCloseDuplicateMessage = (event, reason) => {
+    if (reason === "clickaway") {
+      return;
+    }
+
+    setShowDuplicateMessage(false);
   };
 
   return (
     <div>
       <h2>Категории</h2>
-      <ul className={styles.list}>
+      <div className={styles.categories}>
         {categories.map((category) => (
           <div
             key={category}
@@ -124,7 +84,7 @@ const Category = () => {
             {category}
           </div>
         ))}
-      </ul>
+      </div>
       {selectedCategory && (
         <div key={selectedCategory}>
           <h2>{selectedCategory}</h2>
@@ -142,6 +102,18 @@ const Category = () => {
           <Link href={`/products`}>Найти больше товаров в каталоге</Link>
         </div>
       )}
+      <CustomSnackbar
+        open={showSuccessMessage}
+        handleClose={handleCloseSuccessMessage}
+        severity="success"
+        message="Товар успешно добавлен"
+      />
+      <CustomSnackbar
+        open={showDuplicateMessage}
+        handleClose={handleCloseDuplicateMessage}
+        severity="warning"
+        message="Товар уже добавлен в корзину"
+      />
     </div>
   );
 };

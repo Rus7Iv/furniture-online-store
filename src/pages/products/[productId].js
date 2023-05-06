@@ -11,12 +11,15 @@ import "slick-carousel/slick/slick-theme.css";
 import arrowLeft from "../../../public/arrow-left.svg";
 import arrowRight from "../../../public/arrow-right.svg";
 import Image from "next/image";
+import CustomSnackbar from "@/components/CustomSnackbar";
 
 const ProductPage = () => {
   const router = useRouter();
   const { productId } = router.query;
   const [product, setProduct] = useState(null);
   const [cart, setCart] = useState([]);
+  const [showSuccessMessage, setShowSuccessMessage] = useState(false);
+  const [showDuplicateMessage, setShowDuplicateMessage] = useState(false);
 
   useEffect(() => {
     const fetchProduct = async () => {
@@ -94,13 +97,37 @@ const ProductPage = () => {
     const existingProduct = cart.find((item) => item.id === product.id);
 
     if (existingProduct) {
-      existingProduct.quantity += 1;
+      handleDuplicateMessage();
     } else {
       cart.push({ ...product, quantity: 1 });
+      localStorage.setItem("cart", JSON.stringify(cart));
+      setCart(cart);
+      handleSuccessMessage();
+    }
+  };
+
+  const handleSuccessMessage = () => {
+    setShowSuccessMessage(true);
+  };
+
+  const handleCloseSuccessMessage = (event, reason) => {
+    if (reason === "clickaway") {
+      return;
     }
 
-    localStorage.setItem("cart", JSON.stringify(cart));
-    setCart(cart);
+    setShowSuccessMessage(false);
+  };
+
+  const handleDuplicateMessage = () => {
+    setShowDuplicateMessage(true);
+  };
+
+  const handleCloseDuplicateMessage = (event, reason) => {
+    if (reason === "clickaway") {
+      return;
+    }
+
+    setShowDuplicateMessage(false);
   };
 
   return (
@@ -134,6 +161,18 @@ const ProductPage = () => {
             </button>
           </div>
         </div>
+        <CustomSnackbar
+          open={showSuccessMessage}
+          handleClose={handleCloseSuccessMessage}
+          severity="success"
+          message="Товар успешно добавлен"
+        />
+        <CustomSnackbar
+          open={showDuplicateMessage}
+          handleClose={handleCloseDuplicateMessage}
+          severity="warning"
+          message="Товар уже добавлен в корзину"
+        />
       </main>
       <Footer />
     </>
