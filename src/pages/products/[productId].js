@@ -18,6 +18,7 @@ const ProductPage = () => {
   const { productId } = router.query;
   const [product, setProduct] = useState(null);
   const [cart, setCart] = useState([]);
+  const [isFavorite, setIsFavorite] = useState(false);
   const [showSuccessMessage, setShowSuccessMessage] = useState(false);
   const [showDuplicateMessage, setShowDuplicateMessage] = useState(false);
 
@@ -34,6 +35,12 @@ const ProductPage = () => {
     }
   }, [productId]);
 
+  useEffect(() => {
+    const favorites = JSON.parse(localStorage.getItem("favorites")) || [];
+    const existingProduct = favorites.find((item) => item.id === product?.id);
+    setIsFavorite(!!existingProduct);
+  }, [product]);
+
   if (!product) {
     return (
       <>
@@ -47,10 +54,6 @@ const ProductPage = () => {
       </>
     );
   }
-
-  // if (!productId) {
-  //   return <div>Loading...</div>;
-  // }
 
   const CustomPrevArrow = (props) => {
     const { className, style, onClick } = props;
@@ -99,11 +102,31 @@ const ProductPage = () => {
     if (existingProduct) {
       handleDuplicateMessage();
     } else {
-      cart.push({ ...product, quantity: 1 });
+      cart.push({ ...product, quantity: 1, favorite: false });
       localStorage.setItem("cart", JSON.stringify(cart));
       setCart(cart);
       handleSuccessMessage();
     }
+  };
+
+  const addToFavorites = (product) => {
+    const favorites = JSON.parse(localStorage.getItem("favorites")) || [];
+    const existingProduct = favorites.find((item) => item.id === product.id);
+
+    if (!existingProduct) {
+      favorites.push(product);
+      localStorage.setItem("favorites", JSON.stringify(favorites));
+      setIsFavorite(true);
+    } else {
+      removeFromFavorites(product);
+    }
+  };
+
+  const removeFromFavorites = (product) => {
+    const favorites = JSON.parse(localStorage.getItem("favorites")) || [];
+    const updatedFavorites = favorites.filter((item) => item.id !== product.id);
+    localStorage.setItem("favorites", JSON.stringify(updatedFavorites));
+    setIsFavorite(false);
   };
 
   const handleSuccessMessage = () => {
@@ -158,6 +181,16 @@ const ProductPage = () => {
               className={styles.btn_add_to_cart}
             >
               Добавить в корзину
+            </button>
+            <button
+              onClick={() => addToFavorites(product)}
+              className={
+                isFavorite
+                  ? styles.btn_remove_from_favorites
+                  : styles.btn_add_to_favorites
+              }
+            >
+              {isFavorite ? "❤️" : "🤍"}
             </button>
           </div>
         </div>

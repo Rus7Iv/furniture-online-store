@@ -60,3 +60,12 @@
   color: black;
   box-shadow: inset 0px 5px 5px rgba(0, 0, 0, 0.25);
 }
+
+.btn_remove_from_favorites,
+.btn_add_to_favorites {
+  background-color: transparent;
+  border: none;
+  outline: none;
+  cursor: pointer;
+  font-size: 30px;
+}

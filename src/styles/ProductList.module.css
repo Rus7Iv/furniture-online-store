@@ -58,3 +58,17 @@
   display: flex;
   align-items: center;
 }
+
+.btn_remove_from_favorites,
+.btn_add_to_favorites {
+  background-color: transparent;
+  border: none;
+  outline: none;
+  cursor: pointer;
+  font-size: 30px;
+
+  margin: 10px 15px;
+  position: absolute;
+  top: 0;
+  right: 0;
+}

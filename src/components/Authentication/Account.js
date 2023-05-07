@@ -1,5 +1,6 @@
 import React, { useState } from "react";
 import { auth } from "../../lib/firebase";
+import Link from "next/link";
 
 const Account = () => {
   const [error, setError] = useState(null);
@@ -22,6 +23,10 @@ const Account = () => {
     <main>
       <h1>Добро пожаловать в личный кабинет!</h1>
       <button onClick={handleLogout}>Выйти</button>
+      <ul>
+        <Link href={"/cart"}>Корзина</Link>
+        <Link href={"/favorites"}>Избранное</Link>
+      </ul>
       {error && <p>{error}</p>}
     </main>
   );
