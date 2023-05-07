@@ -6,9 +6,13 @@ import styles from "../styles/FavoritesPage.module.css";
 import Navigation from "@/components/Navigation";
 import Footer from "@/components/Footer";
 import ProductCard from "@/components/ProductCard";
+import CustomSnackbar from "@/components/CustomSnackbar";
 
 const FavoritesPage = () => {
   const [favorites, setFavorites] = useState([]);
+  const [cart, setCart] = useState([]);
+  const [showSuccessMessage, setShowSuccessMessage] = useState(false);
+  const [showDuplicateMessage, setShowDuplicateMessage] = useState(false);
   const router = useRouter();
 
   useEffect(() => {
@@ -31,6 +35,48 @@ const FavoritesPage = () => {
     fetchFavorites();
   }, []);
 
+  const addToCart = (product) => {
+    const cart = JSON.parse(localStorage.getItem("cart")) || [];
+    const existingProduct = cart.find((item) => item.id === product.id);
+
+    if (existingProduct) {
+      handleDuplicateMessage();
+    } else {
+      cart.push({ ...product, quantity: 1, favorite: false });
+      localStorage.setItem("cart", JSON.stringify(cart));
+      setCart(cart);
+      handleSuccessMessage();
+    }
+  };
+
+  const handleSuccessMessage = () => {
+    setShowSuccessMessage(true);
+  };
+
+  const handleCloseSuccessMessage = (event, reason) => {
+    if (reason === "clickaway") {
+      return;
+    }
+
+    setShowSuccessMessage(false);
+  };
+
+  const handleDuplicateMessage = () => {
+    setShowDuplicateMessage(true);
+  };
+
+  const handleCloseDuplicateMessage = (event, reason) => {
+    if (reason === "clickaway") {
+      return;
+    }
+
+    setShowDuplicateMessage(false);
+  };
+
+  useEffect(() => {
+    localStorage.setItem("cart", JSON.stringify(cart));
+  }, [cart]);
+
   return (
     <>
       <Navigation />
@@ -38,13 +84,29 @@ const FavoritesPage = () => {
         <div className={styles.page}>
           {favorites.length > 0 ? (
             favorites.map((favorite) => (
-              <ProductCard key={favorite.id} product={favorite} />
+              <ProductCard
+                key={favorite.id}
+                product={favorite}
+                addToCart={addToCart}
+              />
             ))
           ) : (
             <p className={styles.empty}>В избранном пока нет товаров</p>
           )}
         </div>
       </main>
+      <CustomSnackbar
+        open={showSuccessMessage}
+        handleClose={handleCloseSuccessMessage}
+        severity="success"
+        message="Товар успешно добавлен в корзину"
+      />
+      <CustomSnackbar
+        open={showDuplicateMessage}
+        handleClose={handleCloseDuplicateMessage}
+        severity="warning"
+        message="Товар уже добавлен в корзину"
+      />
       <Footer />
     </>
   );

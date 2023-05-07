@@ -8,9 +8,8 @@ import Footer from "@/components/Footer";
 import Slider from "react-slick";
 import "slick-carousel/slick/slick.css";
 import "slick-carousel/slick/slick-theme.css";
-import arrowLeft from "../../../public/arrow-left.svg";
-import arrowRight from "../../../public/arrow-right.svg";
-import Image from "next/image";
+import CustomPrevArrow from "@/components/Arrows/CustomPrevArrow";
+import CustomNextArrow from "@/components/Arrows/CustomNextArrow";
 import CustomSnackbar from "@/components/CustomSnackbar";
 
 const ProductPage = () => {
@@ -40,60 +39,6 @@ const ProductPage = () => {
     const existingProduct = favorites.find((item) => item.id === product?.id);
     setIsFavorite(!!existingProduct);
   }, [product]);
-
-  if (!product) {
-    return (
-      <>
-        <Navigation />
-        <main>
-          <div className={styles.loading}>
-            <p>Loading...</p>
-          </div>
-        </main>
-        <Footer />
-      </>
-    );
-  }
-
-  const CustomPrevArrow = (props) => {
-    const { className, style, onClick } = props;
-    return (
-      <div className={className} style={{ ...style, display: "block" }}>
-        <Image
-          src={arrowLeft}
-          alt="Prev"
-          width={24}
-          height={24}
-          onClick={onClick}
-        />
-      </div>
-    );
-  };
-
-  const CustomNextArrow = (props) => {
-    const { className, style, onClick } = props;
-    return (
-      <div className={className} style={{ ...style, display: "block" }}>
-        <Image
-          src={arrowRight}
-          alt="Next"
-          width={24}
-          height={24}
-          onClick={onClick}
-        />
-      </div>
-    );
-  };
-
-  const settings = {
-    dots: true,
-    infinite: true,
-    speed: 500,
-    slidesToShow: 1,
-    slidesToScroll: 1,
-    prevArrow: <CustomPrevArrow />,
-    nextArrow: <CustomNextArrow />,
-  };
 
   const addToCart = (product) => {
     const cart = JSON.parse(localStorage.getItem("cart")) || [];
@@ -153,12 +98,35 @@ const ProductPage = () => {
     setShowDuplicateMessage(false);
   };
 
+  if (!product) {
+    return (
+      <>
+        <Navigation />
+        <main>
+          <div className={styles.loading}>
+            <p>Loading...</p>
+          </div>
+        </main>
+        <Footer />
+      </>
+    );
+  }
+
   return (
     <>
       <Navigation />
       <main>
         <div className={styles.page}>
-          <Slider {...settings} className={styles.carousel}>
+          <Slider
+            dots={true}
+            infinite={true}
+            speed={500}
+            slidesToShow={1}
+            slidesToScroll={1}
+            prevArrow={<CustomPrevArrow />}
+            nextArrow={<CustomNextArrow />}
+            className={styles.carousel}
+          >
             {product.image &&
               Array.isArray(product.image) &&
               product.image.map((image) => (
