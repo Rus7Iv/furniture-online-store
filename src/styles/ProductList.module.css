@@ -72,3 +72,52 @@
   top: 0;
   right: 0;
 }
+/* =============================== */
+/* ProductList.module.css */
+.filters {
+  display: flex;
+  justify-content: space-between;
+  margin-bottom: 2rem;
+}
+
+.select {
+  font-size: 1.2rem;
+  padding: 0.5rem;
+  border-radius: 0.5rem;
+  border: none;
+  background-color: #f2f2f2;
+  color: #333;
+  cursor: pointer;
+  transition: background-color 0.2s ease-in-out;
+}
+
+/* Цвет при наведении */
+.select:hover {
+  background-color: #e6e6e6;
+}
+
+.list {
+  display: grid;
+  grid-template-columns: repeat(auto-fit, minmax(250px, 1fr));
+  gap: 2rem;
+  list-style: none;
+  margin: 0;
+  padding: 0;
+}
+
+@media screen and (max-width: 768px) {
+  .list {
+    grid-template-columns: repeat(auto-fit, minmax(150px, 1fr));
+  }
+}
+
+@media screen and (max-width: 480px) {
+  .filters {
+    flex-direction: column;
+    align-items: center;
+  }
+
+  .select {
+    margin-bottom: 1rem;
+  }
+}

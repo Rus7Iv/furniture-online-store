@@ -56,7 +56,6 @@ import {
 } from "firebase/auth";
 import { auth } from "../../lib/firebase";
 import styles from "../../styles/SingupLogin.module.css";
-import Account from "./Account";
 
 const Signup = () => {
   const [email, setEmail] = useState("");
@@ -96,16 +95,6 @@ const Signup = () => {
     signOut(auth);
   };
 
-  // if (isLoggedIn) {
-  //   return (
-  //     // <div className={styles.login}>
-  //     //   <h1>Личный кабинет</h1>
-  //     //   <button onClick={handleLogout}>Выйти</button>
-  //     // </div>
-  //     <Account />
-  //   );
-  // }
-
   return (
     <div className={styles.login}>
       <h1>Регистрация</h1>
@@ -131,7 +120,7 @@ const Signup = () => {
           value={confirmPassword}
           onChange={(e) => setConfirmPassword(e.target.value)}
         />
-        <button className={styles.form_input} type="submit">
+        <button className={styles.form_button} type="submit">
           Зарегистрироваться
         </button>
       </form>
