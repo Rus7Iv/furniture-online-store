@@ -11,3 +11,16 @@ main {
   min-height: 90vh;
   /* min-width: 400px; */
 }
+
+body::-webkit-scrollbar {
+  width: 8px; /* установите нужную ширину */
+}
+
+body::-webkit-scrollbar-track {
+  background-color: #f1f1f1; /* установите нужный цвет фона */
+}
+
+body::-webkit-scrollbar-thumb {
+  background-color: #888; /* установите нужный цвет и стиль ползунка */
+  border-radius: 10px;
+}

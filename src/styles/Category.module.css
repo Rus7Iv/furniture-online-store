@@ -21,16 +21,23 @@
 }
 
 .categories::-webkit-scrollbar {
-  width: 4px;
+  height: 7px;
   background: rgba(255, 255, 255, 0.9);
 }
 
 .categories::-webkit-scrollbar-thumb {
-  background: black;
+  background: #888;
   border-radius: 10px;
 }
 .category {
   display: inline-block;
   padding: 5px;
   cursor: pointer;
+  margin: 20px 2px 30px 40px;
+}
+
+.img {
+  height: 100px;
+  width: 100px;
+  object-fit: cover;
 }

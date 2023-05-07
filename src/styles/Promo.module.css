@@ -1,0 +1,75 @@
+.slick-slider {
+  position: relative;
+  display: block;
+  box-sizing: border-box;
+  user-select: none;
+  touch-action: pan-y;
+  -webkit-tap-highlight-color: transparent;
+}
+
+.slick-list {
+  position: relative;
+  display: block;
+  overflow: hidden;
+  margin: 0;
+  padding: 0;
+}
+
+.slick-slide {
+  display: none;
+  float: left;
+  height: 100%;
+  min-height: 1px;
+}
+
+.slick-slide img {
+  width: 100%;
+  height: 100%;
+  object-fit: cover;
+}
+
+.slick-dots {
+  position: absolute;
+  bottom: 20px;
+  list-style: none;
+  display: flex !important;
+  justify-content: center;
+  margin: 0;
+  padding: 0;
+  width: 100%;
+}
+
+.slick-dots li {
+  margin: 0 5px;
+}
+
+.slick-dots li button {
+  border: none;
+  background: transparent;
+  font-size: 0;
+  line-height: 0;
+  display: inline-block;
+  cursor: pointer;
+  outline: none;
+}
+
+.slick-dots li button:focus,
+.slick-dots li button:hover {
+  outline: none;
+}
+
+.slick-dots li button:before {
+  font-size: 16px;
+  line-height: 1;
+  opacity: 0.25;
+  color: #fff;
+}
+
+.slick-dots li.slick-active button:before {
+  opacity: 0.75;
+}
+
+.image {
+  outline: none;
+  box-shadow: none;
+}
