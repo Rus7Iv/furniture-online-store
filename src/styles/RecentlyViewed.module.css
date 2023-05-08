@@ -1,0 +1,20 @@
+.list {
+  overflow-x: scroll;
+  white-space: nowrap;
+}
+
+.list::-webkit-scrollbar {
+  height: 7px;
+  background: rgba(255, 255, 255, 0.9);
+}
+
+.list::-webkit-scrollbar-thumb {
+  background: #888;
+  border-radius: 10px;
+}
+.item {
+  display: inline-block;
+  padding: 5px;
+  cursor: pointer;
+  margin: 20px 2px 30px 40px;
+}

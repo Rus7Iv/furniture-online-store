@@ -5,6 +5,13 @@
   object-position: center center;
 }
 
+.btn_img {
+  background-color: transparent;
+  border: none;
+  outline: none;
+  cursor: pointer;
+}
+
 .info {
   margin: 30px;
   max-width: 300px;

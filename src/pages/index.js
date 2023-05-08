@@ -2,6 +2,7 @@ import Navigation from "@/components/Navigation";
 import Footer from "@/components/Footer";
 import Category from "../components/Category";
 import Promo from "@/components/Promo";
+import RecentlyViewed from "@/components/RecentlyViewed";
 
 const images = [
   {
@@ -26,6 +27,8 @@ export default function Home() {
         <h1>Это главная страница!</h1>
         <h2>Здесь будут акции, категории и т.д.</h2>
         <Category />
+
+        <RecentlyViewed />
       </main>
       <Footer />
     </>

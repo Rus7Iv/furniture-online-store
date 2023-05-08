@@ -121,3 +121,11 @@
     margin-bottom: 1rem;
   }
 }
+
+.searchInput {
+  padding: 0.5rem;
+  font-size: 1rem;
+  border: 1px solid #ccc;
+  border-radius: 4px;
+  margin-right: 1rem;
+}

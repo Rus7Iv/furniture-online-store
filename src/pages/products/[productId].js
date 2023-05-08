@@ -11,6 +11,7 @@ import "slick-carousel/slick/slick-theme.css";
 import CustomPrevArrow from "@/components/Arrows/CustomPrevArrow";
 import CustomNextArrow from "@/components/Arrows/CustomNextArrow";
 import CustomSnackbar from "@/components/CustomSnackbar";
+import { Modal } from "react-bootstrap";
 
 const ProductPage = () => {
   const router = useRouter();
@@ -20,6 +21,8 @@ const ProductPage = () => {
   const [isFavorite, setIsFavorite] = useState(false);
   const [showSuccessMessage, setShowSuccessMessage] = useState(false);
   const [showDuplicateMessage, setShowDuplicateMessage] = useState(false);
+  const [showModal, setShowModal] = useState(false);
+  const [selectedImageIndex, setSelectedImageIndex] = useState(0);
 
   useEffect(() => {
     const fetchProduct = async () => {
@@ -98,6 +101,16 @@ const ProductPage = () => {
     setShowDuplicateMessage(false);
   };
 
+  const handleCloseModal = () => {
+    setShowModal(false);
+    setSelectedImageIndex(0);
+  };
+
+  const handleShowModal = (index) => {
+    setSelectedImageIndex(index);
+    setShowModal(true);
+  };
+
   if (!product) {
     return (
       <>
@@ -129,13 +142,18 @@ const ProductPage = () => {
           >
             {product.image &&
               Array.isArray(product.image) &&
-              product.image.map((image) => (
+              product.image.map((image, index) => (
                 <div key={image}>
-                  <img
-                    src={image}
-                    alt={product.title}
-                    className={styles.image}
-                  />
+                  <button
+                    onClick={() => handleShowModal(index)}
+                    className={styles.btn_img}
+                  >
+                    <img
+                      src={image}
+                      alt={product.title}
+                      className={styles.image}
+                    />
+                  </button>
                 </div>
               ))}
           </Slider>
@@ -161,6 +179,18 @@ const ProductPage = () => {
               {isFavorite ? "❤️" : "🤍"}
             </button>
           </div>
+
+          <Modal show={showModal} onHide={handleCloseModal} size="lg">
+            <Modal.Header closeButton></Modal.Header>
+            <Modal.Body>
+              <img
+                src={product?.image[selectedImageIndex]}
+                alt={product?.title}
+                className={styles.modalImage}
+                width="100%"
+              />
+            </Modal.Body>
+          </Modal>
         </div>
         <CustomSnackbar
           open={showSuccessMessage}

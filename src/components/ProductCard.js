@@ -1,45 +1,23 @@
-// import Link from "next/link";
-// import styles from "../styles/ProductList.module.css";
-
-// function ProductCard({ product, addToCart }) {
-//   return (
-//     <div key={product.id} className={styles.card}>
-//       <Link
-//         key={product.id}
-//         href={`/products/${product.id}`}
-//         passHref
-//         className={styles.title}
-//       >
-//         <div>
-//           <h2>{product.title}</h2>
-//           <img src={product.image[0]} width={200} alt={product.title} />
-//         </div>
-//       </Link>
-//       <p className={styles.label}>{product.price} ₽</p>
-//       <button
-//         onClick={() => addToCart(product)}
-//         className={styles.btn_add_to_cart}
-//       >
-//         🛒
-//       </button>
-//     </div>
-//   );
-// }
-
-// export default ProductCard;
-
-import Link from "next/link";
 import { useState, useEffect } from "react";
+import Link from "next/link";
 import styles from "../styles/ProductList.module.css";
 
 function ProductCard({ product, addToCart }) {
   const [isFavorite, setIsFavorite] = useState(false);
+  const [viewedPages, setViewedPages] = useState([]);
 
   useEffect(() => {
     const favorites = JSON.parse(localStorage.getItem("favorites")) || [];
     const existingProduct = favorites.find((item) => item.id === product.id);
     setIsFavorite(!!existingProduct);
   }, [product]);
+
+  useEffect(() => {
+    const viewedPagesFromLocalStorage = JSON.parse(
+      localStorage.getItem("viewedPages") || "[]"
+    );
+    setViewedPages(viewedPagesFromLocalStorage);
+  }, []);
 
   const addToFavorites = () => {
     const favorites = JSON.parse(localStorage.getItem("favorites")) || [];
@@ -58,6 +36,23 @@ function ProductCard({ product, addToCart }) {
     }
   };
 
+  const handlePageView = (product) => {
+    const existingProductIndex = viewedPages.findIndex(
+      (p) => p.id === product.id
+    );
+    if (existingProductIndex !== -1) {
+      const updatedViewedPages = [
+        product,
+        ...viewedPages.filter((p) => p.id !== product.id).slice(0, 4),
+      ];
+      setViewedPages(updatedViewedPages);
+      localStorage.setItem("viewedPages", JSON.stringify(updatedViewedPages));
+    } else {
+      const updatedViewedPages = [product, ...viewedPages.slice(0, 4)];
+      setViewedPages(updatedViewedPages);
+      localStorage.setItem("viewedPages", JSON.stringify(updatedViewedPages));
+    }
+  };
   return (
     <div key={product.id} className={styles.card}>
       <Link
@@ -65,11 +60,10 @@ function ProductCard({ product, addToCart }) {
         href={`/products/${product.id}`}
         passHref
         className={styles.title}
+        onClick={() => handlePageView(product)}
       >
-        <div>
-          <h2>{product.title}</h2>
-          <img src={product.image[0]} width={200} alt={product.title} />
-        </div>
+        <h2>{product.title}</h2>
+        <img src={product.image[0]} width={200} alt={product.title} />
       </Link>
       <p className={styles.label}>{product.price} ₽</p>
       <button

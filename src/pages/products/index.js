@@ -12,6 +12,7 @@ import ProductCard from "@/components/ProductCard";
 function ProductsPage() {
   const [products, setProducts] = useState([]);
   const [filteredProducts, setFilteredProducts] = useState([]);
+  const [searchTerm, setSearchTerm] = useState("");
   const [cart, setCart] = useState([]);
   const [showSuccessMessage, setShowSuccessMessage] = useState(false);
   const [showDuplicateMessage, setShowDuplicateMessage] = useState(false);
@@ -69,6 +70,18 @@ function ProductsPage() {
     setShowDuplicateMessage(true);
   };
 
+  const searchProducts = (searchTerm) => {
+    const searchedProducts = products.filter((product) =>
+      product.title.toLowerCase().includes(searchTerm.toLowerCase())
+    );
+    setFilteredProducts(searchedProducts);
+  };
+
+  const handleSearchChange = (event) => {
+    setSearchTerm(event.target.value);
+    searchProducts(event.target.value);
+  };
+
   const handleCloseDuplicateMessage = (event, reason) => {
     if (reason === "clickaway") {
       return;
@@ -117,6 +130,13 @@ function ProductsPage() {
       <main>
         <h1>Каталог товаров</h1>
         <div className={styles.filters}>
+          <input
+            type="text"
+            placeholder="Поиск товаров по названию"
+            value={searchTerm}
+            onChange={handleSearchChange}
+            className={styles.searchInput}
+          />
           <select
             value={selectedCategory}
             onChange={(event) => filterProductsByCategory(event.target.value)}
