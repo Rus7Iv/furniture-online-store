@@ -10,7 +10,6 @@ import CustomSnackbar from "@/components/CustomSnackbar";
 
 const FavoritesPage = () => {
   const [favorites, setFavorites] = useState([]);
-  const [cart, setCart] = useState([]);
   const [showSuccessMessage, setShowSuccessMessage] = useState(false);
   const [showDuplicateMessage, setShowDuplicateMessage] = useState(false);
   const router = useRouter();
@@ -44,7 +43,6 @@ const FavoritesPage = () => {
     } else {
       cart.push({ ...product, quantity: 1, favorite: false });
       localStorage.setItem("cart", JSON.stringify(cart));
-      setCart(cart);
       handleSuccessMessage();
     }
   };
@@ -72,10 +70,6 @@ const FavoritesPage = () => {
 
     setShowDuplicateMessage(false);
   };
-
-  useEffect(() => {
-    localStorage.setItem("cart", JSON.stringify(cart));
-  }, [cart]);
 
   return (
     <>
