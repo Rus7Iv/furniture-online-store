@@ -52,15 +52,17 @@ const Promo = ({ images }) => {
   };
 
   return (
-    <Slider {...settings} className={styles.carousel}>
-      {images.map((image, index) => (
-        <div key={index}>
-          <Link href={image.link}>
-            <img src={image.src} alt={image.alt} className={styles.image} />
-          </Link>
-        </div>
-      ))}
-    </Slider>
+    <div className={styles.wrapper}>
+      <Slider {...settings} className={styles.carousel}>
+        {images.map((image, index) => (
+          <div key={index}>
+            <Link href={image.link}>
+              <img src={image.src} alt={image.alt} className={styles.image} />
+            </Link>
+          </div>
+        ))}
+      </Slider>
+    </div>
   );
 };
 
