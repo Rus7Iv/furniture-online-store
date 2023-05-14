@@ -8,7 +8,6 @@ const Account = () => {
   const [user, setUser] = useState(null);
 
   useEffect(() => {
-    // Получение информации о пользователе из Firebase Authentication.
     const currentUser = auth.currentUser;
     if (currentUser) {
       setUser({

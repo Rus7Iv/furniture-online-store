@@ -24,8 +24,8 @@ export default function Home() {
       <main>
         <Promo images={images} />
 
-        <h1>Это главная страница!</h1>
-        <h2>Здесь будут акции, категории и т.д.</h2>
+        <h1>Добро пожаловать в Furniture!</h1>
+        <h2>Здесь вы можете подобрать мебель под любой интерьер</h2>
         <Category />
 
         <RecentlyViewed />

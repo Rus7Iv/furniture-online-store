@@ -17,18 +17,18 @@ const FavoritesPage = () => {
   useEffect(() => {
     const fetchFavorites = async () => {
       const favorites = JSON.parse(localStorage.getItem("favorites")) || [];
-      const favoriteProducts = [];
-
-      for (let i = 0; i < favorites.length; i++) {
-        const productDoc = doc(db, "products", favorites[i].id);
-        const productSnapshot = await getDoc(productDoc);
-        if (productSnapshot.exists()) {
-          favoriteProducts.push({
-            id: productSnapshot.id,
-            ...productSnapshot.data(),
-          });
-        }
-      }
+      const favoriteProductDocs = favorites.map((fav) =>
+        doc(db, "products", fav.id)
+      );
+      const favoriteProductSnapshots = await Promise.all(
+        favoriteProductDocs.map((doc) => getDoc(doc))
+      );
+      const favoriteProducts = favoriteProductSnapshots
+        .filter((snapshot) => snapshot.exists())
+        .map((snapshot) => ({
+          id: snapshot.id,
+          ...snapshot.data(),
+        }));
       setFavorites(favoriteProducts);
     };
     fetchFavorites();

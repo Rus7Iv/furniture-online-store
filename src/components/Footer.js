@@ -42,21 +42,3 @@ const Footer = () => {
 };
 
 export default Footer;
-
-// import React from "react";
-// import { Container } from "react-bootstrap";
-// import styles from "../styles/Footer.module.css";
-
-// const Footer = () => {
-//   return (
-//     <footer className={styles.footer}>
-//       <Container>
-//         <p className="text-center text-muted mb-0">
-//           © {new Date().getFullYear()} Your Company, Inc.
-//         </p>
-//       </Container>
-//     </footer>
-//   );
-// };
-
-// export default Footer;
