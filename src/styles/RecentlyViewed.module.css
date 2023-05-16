@@ -1,6 +1,10 @@
 .list {
-  overflow-x: scroll;
-  white-space: nowrap;
+  display: flex;
+  flex-wrap: nowrap;
+  overflow-x: auto;
+  scrollbar-width: thin;
+  scrollbar-color: #ccc transparent;
+  padding-right: 40px;
 }
 
 .list::-webkit-scrollbar {
@@ -16,5 +20,5 @@
   display: inline-block;
   padding: 5px;
   cursor: pointer;
-  margin: 20px 2px 30px 40px;
+  margin: 30px 2px 30px 40px;
 }

@@ -9,6 +9,7 @@ import CustomSnackbar from "./CustomSnackbar";
 const categories = [
   { name: "Диваны и кресла", image: "../categories/диваны_и_кресла.jpg" },
   { name: "Столы и стулья", image: "../categories/столы_и_стулья.jpg" },
+  { name: "Кровати и матрасы", image: "../categories/кровати_и_матрасы.jpg" },
 ];
 
 const Category = () => {
@@ -74,7 +75,7 @@ const Category = () => {
 
   return (
     <div>
-      <h2>Категории</h2>
+      <h2 className={styles.title}>Категории</h2>
       <div className={styles.categories}>
         {categories.map((category) => (
           <div
@@ -95,7 +96,7 @@ const Category = () => {
       {selectedCategory && (
         <div key={selectedCategory}>
           <h2>{selectedCategory}</h2>
-          <div className={styles.categories}>
+          <div className={styles.categories} style={{ height: "460px" }}>
             {products
               .filter((product) => product.category === selectedCategory)
               .map((product) => (
@@ -108,7 +109,11 @@ const Category = () => {
                 </div>
               ))}
           </div>
-          <Link href={`/products`}>Найти больше товаров в каталоге</Link>
+          <div className={styles.href_catalog}>
+            <Link href={`/products`} className={styles.text_href}>
+              Найти больше товаров в каталоге
+            </Link>
+          </div>
         </div>
       )}
       <CustomSnackbar

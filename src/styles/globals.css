@@ -9,7 +9,12 @@
 main {
   margin: 120px 40px 40px 40px;
   min-height: 90vh;
-  /* min-width: 400px; */
+}
+
+@media screen and (max-width: 480px) {
+  main {
+    width: 100%;
+  }
 }
 
 body::-webkit-scrollbar {

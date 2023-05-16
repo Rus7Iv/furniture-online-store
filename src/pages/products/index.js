@@ -21,6 +21,10 @@ function ProductsPage() {
   const [selectedCategory, setSelectedCategory] = useState("");
   const [rooms, setRooms] = useState([]);
   const [selectedRoom, setSelectedRoom] = useState("");
+  const [currentPage, setCurrentPage] = useState(1);
+
+  const productsPerPage = 12;
+  const totalPages = Math.ceil(filteredProducts.length / productsPerPage);
 
   useEffect(() => {
     const fetchProducts = async () => {
@@ -102,6 +106,7 @@ function ProductsPage() {
       );
     }
     setFilteredProducts(filteredProducts);
+    setCurrentPage(1);
   };
 
   const handleSearchChange = (event) => {
@@ -137,6 +142,7 @@ function ProductsPage() {
         setSortOrder("");
     }
     setFilteredProducts(sortedProducts);
+    setCurrentPage(1);
   };
 
   const filterProductsByCategory = (categoryId) => {
@@ -148,6 +154,15 @@ function ProductsPage() {
     setSelectedRoom(roomName);
     searchProducts(searchTerm, selectedCategory, roomName);
   };
+
+  const handlePageChange = (pageNumber) => {
+    setCurrentPage(pageNumber);
+  };
+
+  const paginatedProducts = filteredProducts.slice(
+    (currentPage - 1) * productsPerPage,
+    currentPage * productsPerPage
+  );
 
   return (
     <>
@@ -197,15 +212,40 @@ function ProductsPage() {
             <option value="name-asc">Названию (по алфавиту)</option>
           </select>
         </div>
-        <ul className={styles.list}>
-          {filteredProducts.map((product) => (
-            <ProductCard
-              key={product.id}
-              product={product}
-              addToCart={addToCart}
-            />
+        <div className={styles.center_list}>
+          <ul className={styles.list}>
+            {paginatedProducts.map((product) => (
+              <ProductCard
+                key={product.id}
+                product={product}
+                addToCart={addToCart}
+              />
+            ))}
+          </ul>
+        </div>
+        <div className={styles.pagination}>
+          <button
+            onClick={() => handlePageChange(currentPage - 1)}
+            disabled={currentPage === 1}
+          >
+            {"<"}
+          </button>
+          {Array.from({ length: totalPages }, (_, i) => i + 1).map((page) => (
+            <button
+              key={page}
+              onClick={() => handlePageChange(page)}
+              className={currentPage === page ? styles.active : ""}
+            >
+              {page}
+            </button>
           ))}
-        </ul>
+          <button
+            onClick={() => handlePageChange(currentPage + 1)}
+            disabled={currentPage === totalPages}
+          >
+            {">"}
+          </button>
+        </div>
       </main>
       <Footer />
       <CustomSnackbar

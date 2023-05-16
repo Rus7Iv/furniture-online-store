@@ -3,6 +3,7 @@
   height: 100%;
   object-fit: cover;
   object-position: center center;
+  border-radius: 20px;
 }
 
 .btn_img {
@@ -14,8 +15,7 @@
 
 .info {
   margin: 30px;
-  max-width: 300px;
-  text-align: center;
+  width: 50%;
 }
 
 .title {
@@ -28,12 +28,23 @@
 }
 
 .desc {
-  font-size: 30px;
+  font-size: 20px;
+  margin-bottom: 5px;
+}
+
+.showFullDescription {
+  background: none;
+  border: none;
+  margin-left: 0px;
+  color: #666;
 }
 
 .price {
   font-size: 50px;
   font-weight: 700;
+  margin: 40px;
+  margin-right: 20px;
+  display: inline-block;
 }
 
 .loading {
@@ -46,23 +57,34 @@
 
 .carousel {
   width: 500px;
+  height: 400px;
   align-items: center;
-  /* margin - чтобы стрелочки не выходили за пределы этого блока */
-  margin: 30px;
+  margin: 60px 30px 30px 30px;
+  display: flex;
+  align-items: center;
+  justify-content: center;
 }
 
-.btn_add_to_cart {
+.btn_add_to_cart,
+.removeButton {
   border: none;
   background-color: black;
   color: white;
   padding: 10px 20px;
   border-radius: 10px;
   cursor: pointer;
+  margin-left: 40px;
+  height: 50px;
   transition: background-color 0.2s ease-in-out;
   box-shadow: 0px 4px 10px 5px rgba(0, 0, 0, 0.25);
 }
+.removeButton {
+  width: 200px;
+  margin-left: 20px;
+}
 
-.btn_add_to_cart:hover {
+.btn_add_to_cart:hover,
+.removeButton:hover {
   background-color: yellow;
   color: black;
   box-shadow: inset 0px 5px 5px rgba(0, 0, 0, 0.25);
@@ -75,4 +97,26 @@
   outline: none;
   cursor: pointer;
   font-size: 30px;
+  height: 75px;
+}
+
+.quantityButton {
+  background-color: black;
+  color: white;
+  padding: 4px 10px;
+  margin: 10px 20px 10px 20px;
+  border: none;
+  border-radius: 10px;
+  cursor: pointer;
+  font-size: 20px;
+  width: 50px;
+  height: 50px;
+  transition: background-color 0.2s ease-in-out;
+  box-shadow: 0px 4px 10px 5px rgba(0, 0, 0, 0.25);
+}
+
+.buttons {
+  margin-left: 20px;
+  margin-right: 0px;
+  width: 450px;
 }

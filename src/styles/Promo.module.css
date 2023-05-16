@@ -72,9 +72,10 @@
 .image {
   outline: none;
   box-shadow: none;
+  height: 420px;
 }
 
-/* .wrapper {
-  display: flex;
-  justify-content: center;
-} */
+.wrapper {
+  margin-bottom: 40px;
+  width: 100%;
+}

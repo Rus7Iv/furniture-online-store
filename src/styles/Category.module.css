@@ -1,23 +1,25 @@
 .card {
   border: 1px solid white;
   border-radius: 20px;
-  width: 150px;
-  height: 150px;
+  width: 200px;
+  height: 200px;
   margin: 20px 2px 60px 40px;
   padding: 20px;
   text-align: center;
   position: relative;
   cursor: pointer;
-
   box-shadow: 0 16px 70px -8px rgba(0, 0, 0, 0.25);
   background-color: white;
-
   display: inline-block;
 }
 
 .categories {
-  overflow-x: scroll;
-  white-space: nowrap;
+  display: flex;
+  flex-wrap: nowrap;
+  overflow-x: auto;
+  scrollbar-width: thin;
+  scrollbar-color: #ccc transparent;
+  padding-right: 40px;
 }
 
 .categories::-webkit-scrollbar {
@@ -33,11 +35,32 @@
   display: inline-block;
   padding: 5px;
   cursor: pointer;
-  margin: 20px 2px 30px 40px;
+  margin: 30px 2px 30px 40px;
 }
 
 .img {
-  height: 100px;
-  width: 100px;
+  height: 130px;
+  width: 130px;
   object-fit: cover;
+}
+
+.href_catalog {
+  margin: 20px;
+  margin-bottom: 40px;
+  text-align: center;
+}
+
+.text_href {
+  text-decoration: none;
+  font-weight: 500;
+  font-size: 20px;
+  color: black;
+}
+.text_href:hover {
+  text-decoration: underline;
+  color: black;
+}
+
+.title {
+  margin-top: 40px;
 }

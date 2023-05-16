@@ -2,13 +2,11 @@
   border: 1px solid white;
   border-radius: 20px;
   width: 300px;
-  height: 300px;
-  margin: 20px;
+  height: 350px;
   padding: 20px;
   text-align: center;
   position: relative;
   cursor: pointer;
-
   box-shadow: 0 16px 70px -8px rgba(0, 0, 0, 0.25);
   background-color: white;
 }
@@ -18,37 +16,53 @@
   text-decoration: none;
 }
 
+.product_name {
+  margin-top: 35px;
+  font-size: 25px;
+}
+
 .list {
   display: flex;
   flex-wrap: wrap;
-  width: 100%;
+  width: 90%;
+  justify-content: center;
+  margin: 0 auto;
+}
+
+.center_list {
+  display: flex;
+  justify-content: center;
+}
+
+.list > li {
+  width: 300px;
 }
 
 .label {
   font-size: 30px;
   font-weight: 500;
-
   position: absolute;
   bottom: 0;
+  background-color: white;
+  line-height: 0.8;
 }
 
-.btn_add_to_cart {
+.btn_add_to_cart,
+.already_in_cart {
   border: none;
   background-color: black;
   color: white;
   padding: 10px 20px;
   border-radius: 10px;
   cursor: pointer;
-  /* transition: background-color 0.2s ease-in-out;
-  box-shadow: 0px 4px 10px 5px rgba(0, 0, 0, 0.25); */
-
   margin: 10px 15px;
   position: absolute;
   bottom: 0;
   right: 0;
 }
 
-.btn_add_to_cart:hover {
+.btn_add_to_cart:hover,
+.already_in_cart {
   background-color: yellow;
   color: black;
   box-shadow: inset 0px 5px 5px rgba(0, 0, 0, 0.25);
@@ -66,14 +80,12 @@
   outline: none;
   cursor: pointer;
   font-size: 30px;
-
   margin: 10px 15px;
   position: absolute;
   top: 0;
   right: 0;
 }
-/* =============================== */
-/* ProductList.module.css */
+
 .filters {
   display: flex;
   justify-content: space-between;
@@ -91,7 +103,6 @@
   transition: background-color 0.2s ease-in-out;
 }
 
-/* Цвет при наведении */
 .select:hover {
   background-color: #e6e6e6;
 }
@@ -105,10 +116,28 @@
   padding: 0;
 }
 
-@media screen and (max-width: 768px) {
-  .list {
-    grid-template-columns: repeat(auto-fit, minmax(150px, 1fr));
-  }
+.searchInput {
+  padding: 0.5rem;
+  font-size: 1rem;
+  border: 1px solid #ccc;
+  border-radius: 4px;
+}
+
+.pagination {
+  margin: 40px;
+  text-align: center;
+  font-size: 20px;
+}
+
+.pagination button {
+  border: none;
+  background: none;
+  font-weight: 600;
+}
+
+.pagination .active {
+  padding: 0 20px;
+  text-decoration: underline;
 }
 
 @media screen and (max-width: 480px) {
@@ -122,10 +151,34 @@
   }
 }
 
-.searchInput {
-  padding: 0.5rem;
-  font-size: 1rem;
-  border: 1px solid #ccc;
-  border-radius: 4px;
-  margin-right: 1rem;
+@media screen and (max-width: 768px) {
+  .list {
+    grid-template-columns: repeat(auto-fit, minmax(150px, 1fr));
+  }
+}
+
+@media screen and (max-width: 850px) {
+  .list {
+    width: 300px;
+  }
+  .searchInput {
+    width: 300px;
+  }
+}
+
+@media screen and (max-width: 1100px) {
+  .list {
+    width: 80%;
+  }
+}
+
+@media all and (max-width: 950px) {
+  .filters {
+    flex-direction: column;
+  }
+
+  .filters > * {
+    margin-bottom: 10px;
+    width: 100%;
+  }
 }

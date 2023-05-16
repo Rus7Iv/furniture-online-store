@@ -70,7 +70,7 @@ function ProductCard({ product, addToCart }) {
         className={styles.title}
         onClick={() => handlePageView(product)}
       >
-        <h2>{product.title}</h2>
+        <h2 className={styles.product_name}>{product.title}</h2>
         <img src={product.image[0]} width={200} alt={product.title} />
       </Link>
       <p className={styles.label}>{product.price} ₽</p>
@@ -79,10 +79,9 @@ function ProductCard({ product, addToCart }) {
           addToCart(product);
           setInCart(true);
         }}
-        // disabled={inCart}
-        className={inCart ? styles.btn_add_to_cart : styles.btn_add_to_cart}
+        className={inCart ? styles.already_in_cart : styles.btn_add_to_cart}
       >
-        {inCart ? "✅" : "🛒"}
+        🛒
       </button>
       <button
         onClick={addToFavorites}
