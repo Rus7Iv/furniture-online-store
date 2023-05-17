@@ -1,128 +1,12 @@
-// import React, { useState, useEffect } from "react";
-// import { collection, doc, getDocs } from "firebase/firestore";
-// import { db, auth } from "../lib/firebase";
-// import { useRouter } from "next/router";
-// import "firebase/firestore";
-
-// const AdminPanel = () => {
-//   const router = useRouter();
-//   const [title, setTitle] = useState("");
-//   const [description, setDescription] = useState("");
-//   const [image, setImage] = useState("");
-//   const [room, setRoom] = useState("");
-//   const [category, setCategory] = useState("");
-//   const [price, setPrice] = useState("");
-//   const [products, setProducts] = useState([]);
-
-//   const fetchProducts = async () => {
-//     const productsCollection = collection(db, "products");
-//     const productsSnapshot = await getDocs(productsCollection);
-//     const productList = productsSnapshot.docs.map((doc) => ({
-//       id: doc.id,
-//       ...doc.data(),
-//     }));
-//     setProducts(productList);
-//   };
-
-//   const addProduct = async () => {
-//     await db.collection("products").add({
-//       title,
-//       description,
-//       image: image.split(","),
-//       room,
-//       category,
-//       price: parseFloat(price),
-//     });
-//     fetchProducts();
-//   };
-
-//   // Удалить товар из Firestore
-//   const deleteProduct = async (id) => {
-//     await db.collection("products").doc(id).delete();
-//     fetchProducts();
-//   };
-
-//   // Проверка аутентификации
-//   auth.onAuthStateChanged((user) => {
-//     if (user) {
-//       if (user.email !== "test@test.ru") {
-//         auth.signOut();
-//         router.push("/");
-//       } else {
-//         fetchProducts();
-//       }
-//     } else {
-//       router.push("/");
-//     }
-//   });
-
-//   return (
-//     <div>
-//       <h1>Панель администратора</h1>
-//       <div>
-//         {/* Форма добавления товара */}
-//         <h2>Добавить товар</h2>
-//         <input
-//           type="text"
-//           placeholder="Название"
-//           value={title}
-//           onChange={(e) => setTitle(e.target.value)}
-//         />
-//         <input
-//           type="text"
-//           placeholder="Описание"
-//           value={description}
-//           onChange={(e) => setDescription(e.target.value)}
-//         />
-//         <input
-//           type="text"
-//           placeholder="Изображения (через запятую)"
-//           value={image}
-//           onChange={(e) => setImage(e.target.value)}
-//         />
-//         <input
-//           type="text"
-//           placeholder="Комната"
-//           value={room}
-//           onChange={(e) => setRoom(e.target.value)}
-//         />
-//         <input
-//           type="text"
-//           placeholder="Категория"
-//           value={category}
-//           onChange={(e) => setCategory(e.target.value)}
-//         />
-//         <input
-//           type="text"
-//           placeholder="Цена"
-//           value={price}
-//           onChange={(e) => setPrice(e.target.value)}
-//         />
-//         <button onClick={addProduct}>Добавить товар</button>
-//       </div>
-//       <div>
-//         {/* Список товаров */}
-//         <h2>Список товаров</h2>
-//         {products.map((product) => (
-//           <div key={product.id}>
-//             <h3>{product.title}</h3>
-//             <p>{product.description}</p>
-//             <p>Изображения: {product.image.join(", ")}</p>
-//             <p>Комната: {product.room}</p>
-//             <p>Категория: {product.category}</p>
-//             <p>Цена: {product.price}</p>
-//             <button onClick={() => deleteProduct(product.id)}>Удалить</button>
-//           </div>
-//         ))}
-//       </div>
-//     </div>
-//   );
-// };
-
-// export default AdminPanel;
-
 import { useState, useEffect } from "react";
-import { collection, addDoc, getDocs } from "firebase/firestore";
+import {
+  collection,
+  addDoc,
+  getDocs,
+  doc,
+  deleteDoc,
+  updateDoc,
+} from "firebase/firestore";
 import { db, auth } from "../lib/firebase";
 import { useRouter } from "next/router";
 
@@ -135,6 +19,7 @@ const AdminPanel = () => {
   const [category, setCategory] = useState("");
   const [price, setPrice] = useState("");
   const [products, setProducts] = useState([]);
+  const [editProductId, setEditProductId] = useState(null);
 
   const fetchProducts = async () => {
     const productsCollection = collection(db, "products");
@@ -156,55 +41,91 @@ const AdminPanel = () => {
       category,
       price: parseFloat(price),
     });
-    fetchProducts();
     setTitle("");
     setDescription("");
     setImage("");
     setRoom("");
     setCategory("");
     setPrice("");
-  };
-
-  // Удалить товар из Firestore
-  const deleteProduct = async (id) => {
-    await db.collection("products").doc(id).delete();
     fetchProducts();
   };
 
-  // Проверка аутентификации
-  auth.onAuthStateChanged((user) => {
-    if (user) {
-      if (user.email !== "test@test.ru") {
-        auth.signOut();
-        router.push("/");
+  const deleteProduct = async (id) => {
+    await deleteDoc(doc(collection(db, "products"), id));
+    fetchProducts();
+  };
+
+  const editProduct = async (e) => {
+    e.preventDefault();
+    const productRef = doc(collection(db, "products"), editProductId);
+    await updateDoc(productRef, {
+      title,
+      description,
+      image: image.split(","),
+      room,
+      category,
+      price: parseFloat(price),
+    });
+    setTitle("");
+    setDescription("");
+    setImage("");
+    setRoom("");
+    setCategory("");
+    setPrice("");
+    setEditProductId(null);
+    fetchProducts();
+  };
+
+  const startEditing = (product) => {
+    setTitle(product.title);
+    setDescription(product.description);
+    setImage(product.image.join(","));
+    setRoom(product.room);
+    setCategory(product.category);
+    setPrice(product.price);
+    setEditProductId(product.id);
+  };
+
+  useEffect(() => {
+    fetchProducts();
+
+    const unsubscribe = auth.onAuthStateChanged((user) => {
+      if (user) {
+        if (user.email !== "test@test.ru") {
+          auth.signOut();
+          router.push("/");
+        }
       } else {
-        fetchProducts();
+        router.push("/");
       }
-    } else {
-      router.push("/");
-    }
-  });
+    });
+
+    return () => {
+      unsubscribe();
+    };
+  }, []);
 
   return (
     <div>
       <h1>Панель администратора</h1>
       <div>
-        {/* Форма добавления товара */}
         <h2>Добавить товар</h2>
-        <form onSubmit={addProduct}>
+        <div
+          style={{ display: "flex", flexDirection: "column", width: "500px" }}
+        >
           <input
             type="text"
             placeholder="Название"
             value={title}
             onChange={(e) => setTitle(e.target.value)}
           />
-          <input
+          <textarea
             type="text"
             placeholder="Описание"
             value={description}
             onChange={(e) => setDescription(e.target.value)}
           />
-          <input
+          <textarea
             type="text"
             placeholder="Изображения (через запятую)"
             value={image}
@@ -228,20 +149,29 @@ const AdminPanel = () => {
             value={price}
             onChange={(e) => setPrice(e.target.value)}
           />
-          <button type="submit">Добавить товар</button>
-        </form>
+          <button type="submit">
+            {editProductId ? "Сохранить изменения" : "Добавить товар"}
+          </button>
+        </div>
       </div>
       <div>
-        {/* Список товаров */}
         <h2>Список товаров</h2>
         {products.map((product) => (
-          <div key={product.id}>
+          <div
+            key={product.id}
+            style={{
+              border: "1px solid black",
+              padding: "10px",
+              marginBottom: "10px",
+            }}
+          >
             <h3>{product.title}</h3>
             <p>{product.description}</p>
             <p>Изображения: {product.image.join(", ")}</p>
             <p>Комната: {product.room}</p>
             <p>Категория: {product.category}</p>
             <p>Цена: {product.price}</p>
+            <button onClick={() => startEditing(product)}>Редактировать</button>
             <button onClick={() => deleteProduct(product.id)}>Удалить</button>
           </div>
         ))}
