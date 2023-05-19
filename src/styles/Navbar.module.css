@@ -26,6 +26,13 @@
   color: black;
   font-size: 20px;
   margin: 10px;
+  width: 80px;
+  text-align: center;
+}
+
+.link:hover {
+  color: black;
+  font-weight: 700;
 }
 
 .brand {
@@ -36,8 +43,14 @@
 .btn_lk {
   border: 1px solid black;
   border-radius: 10px;
-  padding: 5px;
+  padding: 3px;
 
   font-size: 20px;
   font-weight: bold;
+
+  /* margin-top: 10px;
+  display: flex;
+  text-align: center;
+  justify-content: center;
+  width: 200px; */
 }

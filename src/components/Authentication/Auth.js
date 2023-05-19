@@ -36,20 +36,17 @@ const Auth = () => {
       {isAuthenticated ? (
         <div>
           <Account />
-          {/* <button className={styles.logoutButton} onClick={handleLogout}>
-            Выйти
-          </button> */}
         </div>
       ) : (
         <div>
           <button
-            className={styles.authButton}
+            className={`${styles.authButton} btns`}
             onClick={() => setShowSignup(false)}
           >
             Вход
           </button>
           <button
-            className={styles.authButton}
+            className={`${styles.authButton} btns`}
             onClick={() => setShowSignup(true)}
           >
             Регистрация

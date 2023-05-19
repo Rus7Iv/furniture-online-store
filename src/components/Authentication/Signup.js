@@ -70,7 +70,7 @@ const Signup = () => {
           value={confirmPassword}
           onChange={(e) => setConfirmPassword(e.target.value)}
         />
-        <button className={styles.form_button} type="submit">
+        <button className={`${styles.form_button} btns`} type="submit">
           Зарегистрироваться
         </button>
       </form>

@@ -30,7 +30,6 @@ const Footer = () => {
             <span>2023 UDSU</span>
           </div>
           <div className={styles.tou}>
-            <a href="#">Term of Use</a>
             <a href="#">Privacy</a>
             <a href="#">Policy</a>
             <a href="#">Cookie</a>

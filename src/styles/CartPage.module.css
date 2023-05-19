@@ -1,14 +1,11 @@
-.title {
-  /* font-size: 2rem;
-  font-weight: bold;
-  margin-bottom: 2rem; */
-  max-width: 300px;
-}
-
 .empty {
   font-size: 1.5rem;
   text-align: center;
   margin-top: 2rem;
+}
+
+.name {
+  width: 300px;
 }
 
 .items {
@@ -42,7 +39,6 @@
 .info h2 {
   font-size: 1.5rem;
   font-weight: bold;
-  /* margin: 0 0 0.5rem 0; */
 }
 
 .info p {
@@ -51,53 +47,115 @@
 }
 
 .button {
-  background-color: black;
-  color: white;
-  padding: 4px 10px;
-  margin: 10px;
-  border: none;
-  border-radius: 10px;
-  cursor: pointer;
-  transition: background-color 0.2s ease-in-out;
-  box-shadow: 0px 4px 10px 5px rgba(0, 0, 0, 0.25);
-}
-
-.button:hover {
-  background-color: yellow;
-  color: black;
-  box-shadow: inset 0px 5px 5px rgba(0, 0, 0, 0.25);
+  width: 50px;
+  height: 50px;
 }
 
 .checkout_btn {
   text-decoration: none;
+  width: 200px;
+  height: 60px;
+  text-align: center;
+  margin: 0;
+  display: flex;
+  justify-content: center;
+  align-items: center;
 }
 
 .remove {
-  height: 32px;
-  border: none;
-  background-color: black;
-  color: white;
-  padding: 0px 20px;
-  border-radius: 10px;
-  cursor: pointer;
-  transition: background-color 0.2s ease-in-out;
-  box-shadow: 0px 4px 10px 5px rgba(0, 0, 0, 0.25);
-}
-
-.remove:hover {
-  background-color: yellow;
-  color: black;
-  box-shadow: inset 0px 5px 5px rgba(0, 0, 0, 0.25);
+  height: 50px;
+  margin-left: 30px;
 }
 
 .quantity {
   min-width: 110px;
+  flex-wrap: nowrap;
 }
 
 .details {
   display: flex;
-  justify-content: center;
   align-items: center;
-  texy-align: center;
   flex-wrap: wrap;
+  margin-left: 30px;
+}
+
+.price {
+  font-weight: bold;
+  margin-right: 30px;
+}
+
+.total {
+  display: flex;
+  flex-direction: column;
+  align-items: left;
+  margin-top: 20px;
+}
+
+.total p {
+  font-size: 25px;
+  margin-bottom: 20px;
+  font-weight: bold;
+}
+
+.auth {
+  margin: 20px;
+}
+
+@media all and (max-width: 740px) {
+  .price {
+    margin-right: 10px;
+  }
+
+  .item {
+    flex-direction: column;
+    justify-content: center;
+    padding: 1rem;
+    width: 100%;
+  }
+
+  .name {
+    font-size: 1.2rem;
+    text-align: center;
+    width: 100%;
+    margin-bottom: 0.5rem;
+  }
+
+  .image {
+    width: 200px;
+    margin: 0 auto;
+  }
+
+  .details {
+    margin: 0 auto;
+    justify-content: center;
+    flex-direction: column;
+  }
+
+  .price {
+    margin: 10px 0 15px 0;
+    font-size: 30px;
+  }
+
+  .name {
+    font-size: 30px;
+  }
+}
+
+@media all and (max-width: 500px) {
+  .total {
+    align-items: center;
+  }
+
+  .total p {
+    font-size: 2rem;
+  }
+
+  .price {
+    margin: 10px 0 15px 0;
+    font-size: 30px;
+  }
+
+  .auth {
+    text-align: center;
+  }
 }

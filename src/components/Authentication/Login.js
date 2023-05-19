@@ -45,9 +45,6 @@ const Login = () => {
       {isLoggedIn ? (
         <div>
           <Account />
-          {/* <button className={styles.logoutButton} onClick={handleLogout}>
-            Выйти
-          </button> */}
         </div>
       ) : (
         <div className={styles.login}>
@@ -67,7 +64,7 @@ const Login = () => {
               value={password}
               onChange={(e) => setPassword(e.target.value)}
             />
-            <button className={styles.form_button} type="submit">
+            <button className={`${styles.form_button} btns`} type="submit">
               Войти
             </button>
           </form>

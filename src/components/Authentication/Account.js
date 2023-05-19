@@ -53,7 +53,7 @@ const Account = () => {
         </Link>
       </div>
 
-      <button className={styles.logoutButton} onClick={handleLogout}>
+      <button className={`${styles.logoutButton} btns`} onClick={handleLogout}>
         Выйти
       </button>
 

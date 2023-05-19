@@ -40,9 +40,13 @@ const Navigation = () => {
           {isAuthenticated ? (
             <Link
               href={"/account"}
-              className={`${styles.link} ${styles.btn_lk}`}
+              className={styles.link}
+              style={{
+                fontSize: "20px",
+                textShadow: "2px 2px 6px rgba(0, 0, 0, 0.5)",
+              }}
             >
-              Личный кабинет
+              🏠
             </Link>
           ) : (
             <Link

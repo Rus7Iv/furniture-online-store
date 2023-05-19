@@ -64,3 +64,10 @@
 .title {
   margin-top: 40px;
 }
+
+@media all and (max-width: 500px) {
+  .text_href {
+    text-decoration: underline;
+    text-underline-offset: 6px;
+  }
+}

@@ -1,25 +1,20 @@
 .container {
+  border: none;
+  border-radius: 20px;
   max-width: 500px;
   height: 500px;
-  margin: 0 auto;
   padding: 50px 0;
   text-align: center;
-  /* border: 1px solid black; */
-  border-radius: 30px;
-
-  box-shadow: 0 16px 70px -8px rgba(0, 0, 0, 0.25);
+  margin: 0 auto;
+  box-shadow: 0 8px 16px rgba(0, 0, 0, 0.2);
   background-color: white;
+  transition: box-shadow 0.2s ease-in-out;
 }
 
 .authButton {
-  background-color: #3f51b5;
-  color: white;
-  padding: 10px 20px;
-  border: none;
-  border-radius: 4px;
   font-size: 1.2rem;
   margin-right: 20px;
-  cursor: pointer;
+  margin-bottom: 20px;
 }
 
 .logoutButton {

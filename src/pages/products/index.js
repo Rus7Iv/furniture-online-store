@@ -184,7 +184,7 @@ function ProductsPage() {
           >
             <option value="">Все категории</option>
             {categories.map((category) => (
-              <option key={category} value={category}>
+              <option key={category} value={category} className={styles.option}>
                 {category}
               </option>
             ))}

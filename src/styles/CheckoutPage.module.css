@@ -1,31 +1,28 @@
-/* CheckoutPage.module.css */
 .checkout_form {
   display: flex;
   flex-direction: column;
-  align-items: center;
-  max-width: 800px;
-  margin: 0 auto;
+  width: 500px;
+}
+
+.checkout_input {
+  width: 100%;
+  margin: 10px;
+  font-size: 16px;
+  padding: 12px 16px;
+  border: none;
+  border-radius: 10px;
+  box-shadow: 0 5px 10px rgba(0, 0, 0, 0.2);
+  transition: box-shadow 0.2s ease-in-out;
+  overflow: auto;
+}
+.checkout_input:focus {
+  outline: none;
+  box-shadow: 0 8px 16px rgba(0, 0, 0, 0.3);
 }
 
 .checkout_label {
   font-size: 1.2rem;
   margin-top: 1rem;
-}
-
-.checkout_input,
-.checkout_textarea {
-  padding: 0.5rem;
-  font-size: 1.2rem;
-  width: 100%;
-  margin-top: 0.5rem;
-  border: none;
-  border-bottom: 1px solid #ccc;
-}
-
-.checkout_input:focus,
-.checkout_textarea:focus {
-  outline: none;
-  border-bottom: 1px solid #222;
 }
 
 .checkout_button[type="submit"] {
@@ -121,4 +118,14 @@
 .auth a {
   color: #222;
   text-decoration: underline;
+}
+
+@media all and (max-width: 600px) {
+  .checkout_form {
+    width: 300px;
+  }
+  .wrapper {
+    display: flex;
+    justify-content: center;
+  }
 }

@@ -84,31 +84,33 @@ const CartPage = () => {
                     <img src={item.image[0]} alt={item.name} />
                   </div>
                   <div className={styles.details}>
-                    <h2 className={styles.name}>{item.name}</h2>
-                    <p className={styles.price}>
+                    <h3 className={styles.name}>{item.title}</h3>
+
+                    <h4 className={styles.price}>
                       {item.price.toLocaleString()} руб.
-                    </p>
+                    </h4>
                     <div className={styles.quantity}>
                       <button
                         onClick={() => decrementQuantity(index)}
-                        className={styles.button}
+                        className={`${styles.button} btns`}
                       >
                         -
                       </button>
                       <span className={styles.value}>{item.quantity}</span>
                       <button
                         onClick={() => incrementQuantity(index)}
-                        className={styles.button}
+                        className={`${styles.button} btns`}
                       >
                         +
                       </button>
+
+                      <button
+                        onClick={() => removeItem(index)}
+                        className={`${styles.remove} btns`}
+                      >
+                        Удалить
+                      </button>
                     </div>
-                    <button
-                      onClick={() => removeItem(index)}
-                      className={styles.remove}
-                    >
-                      Удалить
-                    </button>
                   </div>
                 </li>
               ))}
@@ -117,15 +119,34 @@ const CartPage = () => {
               <p>Итого: {total.toLocaleString()} руб.</p>
               {isAuthenticated ? (
                 <Link
-                  className={`${styles.button} ${styles.checkout_btn}`}
+                  className={`${styles.checkout_btn} btns`}
                   href="/checkout"
+                  // style={{
+                  //   display: "flex",
+                  //   justifyContent: "center",
+                  //   alignItems: "center",
+                  // }}
                 >
                   Оформить заказ
                 </Link>
               ) : (
-                <p className={styles.auth}>
+                <p
+                  className={styles.auth}
+                  style={{
+                    fontSize: "20px",
+                    fontWeight: "500",
+                    color: "black",
+                  }}
+                >
                   Для оформления заказа необходимо{" "}
-                  <a href="/account">войти в аккаунт</a>
+                  <Link
+                    href="/account"
+                    style={{
+                      color: "black",
+                    }}
+                  >
+                    войти в аккаунт
+                  </Link>
                 </p>
               )}
             </div>

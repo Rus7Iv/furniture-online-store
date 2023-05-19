@@ -143,25 +143,6 @@ const ProductPage = () => {
     setShowModal(true);
   };
 
-  // const handleQuantityChange = (event, product) => {
-  //   const cart = JSON.parse(localStorage.getItem("cart")) || [];
-  //   const existingProductIndex = cart.findIndex(
-  //     (item) => item.id === product.id
-  //   );
-
-  //   if (existingProductIndex >= 0) {
-  //     const newQuantity = parseInt(event.target.value);
-
-  //     if (newQuantity <= 0) {
-  //       cart.splice(existingProductIndex, 1);
-  //     } else {
-  //       cart[existingProductIndex].quantity = newQuantity;
-  //     }
-
-  //     localStorage.setItem("cart", JSON.stringify(cart));
-  //     setCart(cart);
-  //   }
-  // };
   const handleQuantityDecrease = (product) => {
     const cart = JSON.parse(localStorage.getItem("cart")) || [];
     const existingProductIndex = cart.findIndex(
@@ -205,33 +186,35 @@ const ProductPage = () => {
       <Navigation />
       <main>
         <div className={styles.page}>
-          <Slider
-            dots={true}
-            infinite={true}
-            speed={500}
-            slidesToShow={1}
-            slidesToScroll={1}
-            prevArrow={<CustomPrevArrow />}
-            nextArrow={<CustomNextArrow />}
-            className={styles.carousel}
-          >
-            {product.image &&
-              Array.isArray(product.image) &&
-              product.image.map((image, index) => (
-                <div key={image}>
-                  <button
-                    onClick={() => handleShowModal(index)}
-                    className={styles.btn_img}
-                  >
-                    <img
-                      src={image}
-                      alt={product.title}
-                      className={styles.image}
-                    />
-                  </button>
-                </div>
-              ))}
-          </Slider>
+          <div className={styles.wrapper}>
+            <Slider
+              dots={true}
+              infinite={true}
+              speed={500}
+              slidesToShow={1}
+              slidesToScroll={1}
+              prevArrow={<CustomPrevArrow />}
+              nextArrow={<CustomNextArrow />}
+              className={styles.carousel}
+            >
+              {product.image &&
+                Array.isArray(product.image) &&
+                product.image.map((image, index) => (
+                  <div key={image}>
+                    <button
+                      onClick={() => handleShowModal(index)}
+                      className={styles.btn_img}
+                    >
+                      <img
+                        src={image}
+                        alt={product.title}
+                        className={styles.image}
+                      />
+                    </button>
+                  </div>
+                ))}
+            </Slider>
+          </div>
 
           <div className={styles.info}>
             <h1 className={styles.title}>{product.title}</h1>
@@ -248,84 +231,56 @@ const ProductPage = () => {
                 {showFullDescription ? "Скрыть" : "Показать всё"}
               </button>
             )}
-
-            <div style={{ display: "flex", alignItems: "center" }}>
-              <p className={styles.price}>{product.price} ₽</p>
-              <button
-                onClick={() => addToFavorites(product)}
-                className={
-                  isFavorite
-                    ? styles.btn_remove_from_favorites
-                    : styles.btn_add_to_favorites
-                }
-              >
-                {isFavorite ? "❤️" : "🤍"}
-              </button>
+            <div className={styles.price_and_btns}>
+              <div style={{ display: "flex", alignItems: "center" }}>
+                <p className={styles.price}>{product.price} ₽</p>
+                <button
+                  onClick={() => addToFavorites(product)}
+                  className={
+                    isFavorite
+                      ? styles.btn_remove_from_favorites
+                      : styles.btn_add_to_favorites
+                  }
+                >
+                  {isFavorite ? "❤️" : "🤍"}
+                </button>
+              </div>
+              {cart.find((item) => item.id === product.id) ? (
+                <div className={styles.quantity_group}>
+                  <div className={styles.plus_minus}>
+                    <button
+                      className={`${styles.quantity_button} btns`}
+                      onClick={() => handleQuantityDecrease(product)}
+                    >
+                      -
+                    </button>
+                    <span className={styles.quantitySpan}>
+                      {cart.find((item) => item.id === product.id)?.quantity ||
+                        1}
+                    </span>
+                    <button
+                      className={`${styles.quantity_button} btns`}
+                      onClick={() => addToCart(product)}
+                    >
+                      +
+                    </button>
+                  </div>
+                  <button
+                    className={`${styles.remove_button} btns`}
+                    onClick={() => handleRemoveFromCart(product)}
+                  >
+                    Удалить из корзины
+                  </button>
+                </div>
+              ) : (
+                <button
+                  className={`${styles.btn_add_to_cart} btns`}
+                  onClick={() => addToCart(product)}
+                >
+                  Добавить в корзину
+                </button>
+              )}
             </div>
-            {/* {cart.find((item) => item.id === product.id) ? (
-              <div className={styles.buttons}>
-                <button
-                  className={styles.quantityButton}
-                  onClick={() => removeFromCart(product)}
-                >
-                  -
-                </button>
-                <span className={styles.quantitySpan}>
-                  {cart.find((item) => item.id === product.id)?.quantity || 1}
-                </span>
-                <button
-                  className={styles.quantityButton}
-                  onClick={() => addToCart(product)}
-                >
-                  +
-                </button>
-                <button
-                  className={styles.removeButton}
-                  onClick={() => removeFromCart(product)}
-                >
-                  Удалить из корзины
-                </button>
-              </div>
-            ) : (
-              <button
-                className={styles.btn_add_to_cart}
-                onClick={() => addToCart(product)}
-              >
-                Добавить в корзину
-              </button>
-            )} */}
-            {cart.find((item) => item.id === product.id) ? (
-              <div className={styles.buttons}>
-                <button
-                  className={styles.quantityButton}
-                  onClick={() => handleQuantityDecrease(product)}
-                >
-                  -
-                </button>
-                <span className={styles.quantitySpan}>
-                  {cart.find((item) => item.id === product.id)?.quantity || 1}
-                </span>
-                <button
-                  className={styles.quantityButton}
-                  onClick={() => addToCart(product)}
-                >
-                  +
-                </button>
-                <button
-                  className={styles.removeButton}
-                  onClick={() => handleRemoveFromCart(product)}
-                >
-                  Удалить из корзины
-                </button>
-              </div>
-            ) : (
-              <button
-                className={styles.btn_add_to_cart}
-                onClick={() => addToCart(product)}
-              >
-                Добавить в корзину
-              </button>
-            )}
           </div>
 
           <Modal show={showModal} onHide={handleCloseModal} size="lg">

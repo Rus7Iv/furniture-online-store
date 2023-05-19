@@ -76,6 +76,26 @@
 }
 
 .wrapper {
+  width: 95%;
+  margin: 0 auto;
+}
+
+.carousel {
   margin-bottom: 40px;
-  width: 100%;
+}
+
+@media all and (max-width: 700px) {
+  .carousel {
+    min-width: 200px;
+  }
+
+  .image {
+    height: 200px;
+  }
+}
+
+@media all and (max-width: 480px) {
+  .wrapper {
+    width: 85%;
+  }
 }

@@ -7,13 +7,13 @@
 }
 
 main {
-  margin: 120px 40px 40px 40px;
+  margin: 120px 40px 70px 40px;
   min-height: 90vh;
 }
 
 @media screen and (max-width: 480px) {
   main {
-    width: 100%;
+    margin: 120px 10px 40px 10px;
   }
 }
 
@@ -28,4 +28,23 @@ body::-webkit-scrollbar-track {
 body::-webkit-scrollbar-thumb {
   background-color: #888; /* установите нужный цвет и стиль ползунка */
   border-radius: 10px;
+}
+
+.btns {
+  border: none;
+  background-color: black;
+  color: white;
+  padding: 10px 20px;
+  border-radius: 10px;
+  cursor: pointer;
+  margin: 10px 15px;
+  box-shadow: 0 5px 10px rgba(0, 0, 0, 0.2);
+  transition: box-shadow 0.2s ease-in-out;
+}
+
+.btns:hover {
+  background-color: yellow;
+  color: black;
+  box-shadow: inset 0px 5px 5px rgba(0, 0, 0, 0.25),
+    0 8px 16px rgba(0, 0, 0, 0.3);
 }

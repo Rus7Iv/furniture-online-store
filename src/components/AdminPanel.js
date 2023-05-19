@@ -9,6 +9,7 @@ import {
 } from "firebase/firestore";
 import { db, auth } from "../lib/firebase";
 import { useRouter } from "next/router";
+import styles from "@/styles/AdminPanel.module.css";
 
 const AdminPanel = () => {
   const router = useRouter();
@@ -107,72 +108,78 @@ const AdminPanel = () => {
 
   return (
     <div>
-      <h1>Панель администратора</h1>
-      <div>
-        <h2>Добавить товар</h2>
-        <div
-          style={{ display: "flex", flexDirection: "column", width: "500px" }}
-        >
+      <h1 className={styles.title}>Панель администратора</h1>
+      <h2 className={styles.title}>Добавить товар</h2>
+      <div className={styles.wrapper}>
+        <div className={styles.form}>
           <input
             type="text"
             placeholder="Название"
             value={title}
             onChange={(e) => setTitle(e.target.value)}
+            className={styles.input}
           />
           <textarea
             type="text"
             placeholder="Описание"
             value={description}
             onChange={(e) => setDescription(e.target.value)}
+            className={styles.input}
           />
           <textarea
             type="text"
             placeholder="Изображения (через запятую)"
             value={image}
             onChange={(e) => setImage(e.target.value)}
+            className={styles.input}
           />
           <input
             type="text"
             placeholder="Комната"
             value={room}
             onChange={(e) => setRoom(e.target.value)}
+            className={styles.input}
           />
           <input
             type="text"
             placeholder="Категория"
             value={category}
             onChange={(e) => setCategory(e.target.value)}
+            className={styles.input}
           />
           <input
             type="text"
             placeholder="Цена"
             value={price}
             onChange={(e) => setPrice(e.target.value)}
+            className={styles.input}
           />
-          <button type="submit">
+          <button
+            type="submit"
+            className={`${styles.edit_save_btn} btns`}
+            onClick={editProductId ? editProduct : addProduct}
+          >
             {editProductId ? "Сохранить изменения" : "Добавить товар"}
           </button>
         </div>
       </div>
       <div>
-        <h2>Список товаров</h2>
+        <h2 className={styles.title}>Список товаров</h2>
         {products.map((product) => (
-          <div
-            key={product.id}
-            style={{
-              border: "1px solid black",
-              padding: "10px",
-              marginBottom: "10px",
-            }}
-          >
+          <div key={product.id} className={styles.card}>
             <h3>{product.title}</h3>
             <p>{product.description}</p>
-            <p>Изображения: {product.image.join(", ")}</p>
+            <p>Изображения: </p>
+            <p className={styles.images_input}>{product.image.join(", ")}</p>
             <p>Комната: {product.room}</p>
             <p>Категория: {product.category}</p>
             <p>Цена: {product.price}</p>
-            <button onClick={() => startEditing(product)}>Редактировать</button>
-            <button onClick={() => deleteProduct(product.id)}>Удалить</button>
+            <button onClick={() => startEditing(product)} className="btns">
+              Редактировать
+            </button>
+            <button onClick={() => deleteProduct(product.id)} className="btns">
+              Удалить
+            </button>
           </div>
         ))}
       </div>
