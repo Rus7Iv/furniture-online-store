@@ -81,7 +81,12 @@ const CartPage = () => {
               {cart.map((item, index) => (
                 <li key={index} className={styles.item}>
                   <div className={styles.image}>
-                    <img src={item.image[0]} alt={item.name} />
+                    {
+                      /* <img src={item.image[0]} alt={item.name} /> */
+                      <Link href={`/products/${item.id}`}>
+                        <img src={item.image[0]} alt={item.name} />
+                      </Link>
+                    }
                   </div>
                   <div className={styles.details}>
                     <h3 className={styles.name}>{item.title}</h3>

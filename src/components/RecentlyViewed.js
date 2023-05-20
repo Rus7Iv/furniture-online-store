@@ -54,7 +54,8 @@ function RecentlyViewed() {
 
   return (
     <div>
-      <h3>Вы недавно смотрели:</h3>
+      <div style={{ height: "80px" }} />
+      <h3 className={styles.title}>Вы недавно смотрели:</h3>
       <div className={styles.list} style={{ height: "460px" }}>
         {viewedPages.slice(0, 3).map((product) => (
           <div className={styles.item} key={product.id}>

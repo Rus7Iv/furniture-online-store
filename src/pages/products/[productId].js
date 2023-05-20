@@ -31,12 +31,15 @@ const ProductPage = () => {
       const productSnapshot = await getDoc(productDoc);
       if (productSnapshot.exists()) {
         setProduct({ id: productSnapshot.id, ...productSnapshot.data() });
+      } else {
+        // Если продукт не найден, перенаправляем на страницу 404
+        router.replace("/404");
       }
     };
     if (productId) {
       fetchProduct();
     }
-  }, [productId]);
+  }, [productId, router]);
 
   useEffect(() => {
     const favorites = JSON.parse(localStorage.getItem("favorites")) || [];
@@ -171,9 +174,16 @@ const ProductPage = () => {
     return (
       <>
         <Navigation />
-        <main>
+        <main
+          style={{
+            display: "flex",
+            alignItems: "center",
+            justifyContent: "center",
+          }}
+        >
           <div className={styles.loading}>
-            <p>Loading...</p>
+            <div className={styles.spinner}></div>
+            <p>Загрузка...</p>
           </div>
         </main>
         <Footer />
