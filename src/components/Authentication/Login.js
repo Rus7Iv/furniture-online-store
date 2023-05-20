@@ -32,7 +32,17 @@ const Login = () => {
       setEmail("");
       setPassword("");
     } catch (err) {
-      setError(err.message);
+      if (err.code === "auth/user-not-found") {
+        setError(
+          "Пользовательс таким email не найден. Пожалуйста, проверьте правильность введенного email."
+        );
+      } else if (err.code === "auth/wrong-password") {
+        setError(
+          "Неправильный пароль. Пожалуйста, проверьте правильность введенного пароля."
+        );
+      } else {
+        setError("Произошла ошибка при входе. Пожалуйста, попробуйте еще раз.");
+      }
     }
   };
 
