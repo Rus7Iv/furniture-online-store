@@ -60,6 +60,10 @@ function ProductsPage() {
     fetchRooms();
   }, []);
 
+  useEffect(() => {
+    window.scrollTo(0, 0);
+  }, [currentPage]);
+
   const addToCart = (product) => {
     const cart = JSON.parse(localStorage.getItem("cart")) || [];
     const existingProduct = cart.find((item) => item.id === product.id);

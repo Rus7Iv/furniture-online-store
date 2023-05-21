@@ -133,20 +133,46 @@ const AdminPanel = () => {
             onChange={(e) => setImage(e.target.value)}
             className={styles.input}
           />
-          <input
-            type="text"
-            placeholder="Комната"
-            value={room}
-            onChange={(e) => setRoom(e.target.value)}
-            className={styles.input}
-          />
-          <input
-            type="text"
-            placeholder="Категория"
+          <select
             value={category}
-            onChange={(e) => setCategory(e.target.value)}
             className={styles.input}
-          />
+            onChange={(e) => setCategory(e.target.value)}
+          >
+            <option value="">Выберите категорию</option>
+            {[
+              "Диваны и кресла",
+              "Шкафы и стеллажи",
+              "Кровати и матрасы",
+              "Кухонные гарнитуры",
+              "Столы и стулья",
+              "Освещение",
+              "Мебель для офиса",
+              "Мебель для ванной",
+            ].map((category) => (
+              <option key={category} value={category}>
+                {category}
+              </option>
+            ))}
+          </select>
+          <select
+            value={room}
+            className={styles.input}
+            onChange={(e) => setRoom(e.target.value)}
+          >
+            <option value="">Выберите комнату</option>
+            {[
+              "Кухня",
+              "Гостиная",
+              "Спальня",
+              "Ванная",
+              "Офис",
+              "Гардеробная",
+            ].map((room) => (
+              <option key={room} value={room}>
+                {room}
+              </option>
+            ))}
+          </select>
           <input
             type="text"
             placeholder="Цена"
