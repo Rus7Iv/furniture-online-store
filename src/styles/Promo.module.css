@@ -72,7 +72,9 @@
 .image {
   outline: none;
   box-shadow: none;
-  height: 420px;
+
+  background-color: transparent;
+  border: none;
 }
 
 .wrapper {

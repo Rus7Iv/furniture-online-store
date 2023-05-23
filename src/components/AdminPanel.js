@@ -34,6 +34,7 @@ const AdminPanel = () => {
 
   const addProduct = async (e) => {
     e.preventDefault();
+    const isCarousel = document.getElementById("add-to-carousel").checked;
     await addDoc(collection(db, "products"), {
       title,
       description,
@@ -41,6 +42,7 @@ const AdminPanel = () => {
       room,
       category,
       price: parseFloat(price),
+      isCarousel: isCarousel,
     });
     setTitle("");
     setDescription("");
@@ -85,6 +87,14 @@ const AdminPanel = () => {
     setCategory(product.category);
     setPrice(product.price);
     setEditProductId(product.id);
+  };
+
+  const handleCarouselToggle = async (productId, isCarousel) => {
+    const productRef = doc(collection(db, "products"), productId);
+    await updateDoc(productRef, {
+      isCarousel: isCarousel,
+    });
+    fetchProducts();
   };
 
   useEffect(() => {
@@ -200,6 +210,19 @@ const AdminPanel = () => {
             <p>Комната: {product.room}</p>
             <p>Категория: {product.category}</p>
             <p>Цена: {product.price}</p>
+
+            <button
+              onClick={() =>
+                handleCarouselToggle(product.id, !product.isCarousel)
+              }
+              className="btns"
+              style={{ width: "200px" }}
+            >
+              {product.isCarousel
+                ? "Убрать из карусели"
+                : "Добавить в карусель"}
+            </button>
+
             <button onClick={() => startEditing(product)} className="btns">
               Редактировать
             </button>

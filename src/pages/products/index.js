@@ -2,6 +2,8 @@ import { collection, getDocs } from "firebase/firestore";
 import { db } from "@/lib/firebase";
 import { useState, useEffect } from "react";
 import styles from "../../styles/ProductList.module.css";
+import { useMemo } from "react"; // Добавляем useMemo
+
 import Navigation from "@/components/Navigation";
 import Footer from "@/components/Footer";
 import "slick-carousel/slick/slick.css";
@@ -24,7 +26,6 @@ function ProductsPage() {
   const [currentPage, setCurrentPage] = useState(1);
 
   const productsPerPage = 12;
-  const totalPages = Math.ceil(filteredProducts.length / productsPerPage);
 
   useEffect(() => {
     const fetchProducts = async () => {
@@ -95,21 +96,23 @@ function ProductsPage() {
   };
 
   const searchProducts = (searchTerm, category, room) => {
-    const searchedProducts = products.filter((product) =>
-      product.title.toLowerCase().includes(searchTerm.toLowerCase())
-    );
-    let filteredProducts = searchedProducts;
+    let searchedProducts = [...products]; // Создаем копию всех продуктов
+    if (searchTerm !== "") {
+      searchedProducts = searchedProducts.filter((product) =>
+        product.title.toLowerCase().includes(searchTerm.toLowerCase())
+      );
+    }
     if (category !== "") {
-      filteredProducts = filteredProducts.filter(
+      searchedProducts = searchedProducts.filter(
         (product) => product.category === category
       );
     }
     if (room !== "") {
-      filteredProducts = filteredProducts.filter(
+      searchedProducts = searchedProducts.filter(
         (product) => product.room === room
       );
     }
-    setFilteredProducts(filteredProducts);
+    setFilteredProducts(searchedProducts);
     setCurrentPage(1);
   };
 
@@ -126,44 +129,47 @@ function ProductsPage() {
     setShowDuplicateMessage(false);
   };
 
-  const sortProducts = (sortBy) => {
+  const filteredProductsMemo = useMemo(() => {
     let sortedProducts = [...filteredProducts];
-    switch (sortBy) {
+    switch (sortOrder) {
       case "price-asc":
         sortedProducts.sort((a, b) => a.price - b.price);
-        setSortOrder("price-asc");
         break;
       case "price-desc":
         sortedProducts.sort((a, b) => b.price - a.price);
-        setSortOrder("price-desc");
         break;
       case "name-asc":
         sortedProducts.sort((a, b) => a.title.localeCompare(b.title));
-        setSortOrder("name-asc");
         break;
       default:
-        sortedProducts = products;
-        setSortOrder("");
+        sortedProducts = filteredProducts;
+        break;
     }
-    setFilteredProducts(sortedProducts);
-    setCurrentPage(1);
-  };
+    if (selectedCategory !== "") {
+      sortedProducts = sortedProducts.filter(
+        (product) => product.category === selectedCategory
+      );
+    }
+    if (selectedRoom !== "") {
+      sortedProducts = sortedProducts.filter(
+        (product) => product.room === selectedRoom
+      );
+    }
+    if (searchTerm !== "") {
+      sortedProducts = sortedProducts.filter((product) =>
+        product.title.toLowerCase().includes(searchTerm.toLowerCase())
+      );
+    }
+    return sortedProducts;
+  }, [filteredProducts, sortOrder, selectedCategory, selectedRoom, searchTerm]);
 
-  const filterProductsByCategory = (categoryId) => {
-    setSelectedCategory(categoryId);
-    searchProducts(searchTerm, categoryId, selectedRoom);
-  };
-
-  const filterProductsByRoom = (roomName) => {
-    setSelectedRoom(roomName);
-    searchProducts(searchTerm, selectedCategory, roomName);
-  };
+  const totalPages = Math.ceil(filteredProductsMemo.length / productsPerPage);
 
   const handlePageChange = (pageNumber) => {
     setCurrentPage(pageNumber);
   };
 
-  const paginatedProducts = filteredProducts.slice(
+  const paginatedProducts = filteredProductsMemo.slice(
     (currentPage - 1) * productsPerPage,
     currentPage * productsPerPage
   );
@@ -175,28 +181,34 @@ function ProductsPage() {
         <h1>Каталог товаров</h1>
         <div className={styles.filters}>
           <input
+            className={styles.searchInput}
             type="text"
             placeholder="Поиск товаров по названию"
             value={searchTerm}
             onChange={handleSearchChange}
-            className={styles.searchInput}
           />
           <select
-            value={selectedCategory}
-            onChange={(event) => filterProductsByCategory(event.target.value)}
             className={styles.select}
+            value={selectedCategory}
+            onChange={(e) => {
+              setSelectedCategory(e.target.value);
+              searchProducts(searchTerm, e.target.value, selectedRoom);
+            }}
           >
             <option value="">Все категории</option>
             {categories.map((category) => (
-              <option key={category} value={category} className={styles.option}>
+              <option key={category} value={category}>
                 {category}
               </option>
             ))}
           </select>
           <select
-            value={selectedRoom}
-            onChange={(event) => filterProductsByRoom(event.target.value)}
             className={styles.select}
+            value={selectedRoom}
+            onChange={(e) => {
+              setSelectedRoom(e.target.value);
+              searchProducts(searchTerm, selectedCategory, e.target.value);
+            }}
           >
             <option value="">Все комнаты</option>
             {rooms.map((room) => (
@@ -206,16 +218,44 @@ function ProductsPage() {
             ))}
           </select>
           <select
-            value={sortOrder}
-            onChange={(event) => sortProducts(event.target.value)}
             className={styles.select}
+            value={sortOrder}
+            onChange={(e) => {
+              setSortOrder(e.target.value);
+              setCurrentPage(1);
+            }}
           >
-            <option value="">Сортировать по:</option>
+            <option value="">Сортировать по</option>
+            <option value="name-asc">Названию (А-Я)</option>
             <option value="price-asc">Цене (по возрастанию)</option>
             <option value="price-desc">Цене (по убыванию)</option>
-            <option value="name-asc">Названию (по алфавиту)</option>
           </select>
         </div>
+        {/* <div className={styles.productList}>
+          {paginatedProducts.map((product) => (
+            <ProductCard
+              key={product.id}
+              product={product}
+              addToCart={addToCart}
+            />
+          ))}
+        </div>
+        <div className={styles.pagination}>
+          {totalPages > 1 && (
+            <ul>
+              {Array.from(Array(totalPages), (e, i) => (
+                <li key={i}>
+                  <button
+                    className={currentPage === i + 1 ? styles.activePage : ""}
+                    onClick={() => handlePageChange(i + 1)}
+                  >
+                    {i + 1}
+                  </button>
+                </li>
+              ))}
+            </ul>
+          )}
+        </div> */}
         <div className={styles.center_list}>
           <ul className={styles.list}>
             {paginatedProducts.map((product) => (
@@ -254,13 +294,13 @@ function ProductsPage() {
       <Footer />
       <CustomSnackbar
         open={showSuccessMessage}
-        handleClose={handleCloseSuccessMessage}
+        onClose={handleCloseSuccessMessage}
         message="Товар добавлен в корзину"
         severity="success"
       />
       <CustomSnackbar
         open={showDuplicateMessage}
-        handleClose={handleCloseDuplicateMessage}
+        onClose={handleCloseDuplicateMessage}
         message="Этот товар уже в корзине"
         severity="warning"
       />
