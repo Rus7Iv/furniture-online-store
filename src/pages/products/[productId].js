@@ -103,8 +103,10 @@ const ProductPage = () => {
   };
 
   const shortDescription =
-    product && product.description && product.description.length > 190
-      ? product.description.slice(0, 190) + "..."
+    product && product.description
+      ? product.description.length > 190
+        ? product.description.slice(0, 190) + "..."
+        : product.description
       : "";
 
   const longDescription =
@@ -228,7 +230,6 @@ const ProductPage = () => {
 
           <div className={styles.info}>
             <h1 className={styles.title}>{product.title}</h1>
-            {/* <p className={styles.desc}>{product.description}</p> */}
             <p className={styles.desc}>
               {showFullDescription ? longDescription : shortDescription}
             </p>
