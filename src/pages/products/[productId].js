@@ -12,6 +12,7 @@ import CustomPrevArrow from "@/components/Arrows/CustomPrevArrow";
 import CustomNextArrow from "@/components/Arrows/CustomNextArrow";
 import CustomSnackbar from "@/components/CustomSnackbar";
 import { Modal } from "react-bootstrap";
+import Loading from "@/components/Loading";
 
 const ProductPage = () => {
   const router = useRouter();
@@ -176,7 +177,7 @@ const ProductPage = () => {
     return (
       <>
         <Navigation />
-        <main
+        {/* <main
           style={{
             display: "flex",
             alignItems: "center",
@@ -187,7 +188,8 @@ const ProductPage = () => {
             <div className={styles.spinner}></div>
             <p>Загрузка...</p>
           </div>
-        </main>
+        </main> */}
+        <Loading />
         <Footer />
       </>
     );

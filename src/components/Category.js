@@ -5,6 +5,7 @@ import styles from "../styles/Category.module.css";
 import Link from "next/link";
 import ProductCard from "./ProductCard";
 import CustomSnackbar from "./CustomSnackbar";
+import { MotionButton } from "./MotionButton/MotionButton";
 
 const categories = [
   { name: "Диваны и кресла", image: "../categories/диваны_и_кресла.jpg" },
@@ -82,21 +83,23 @@ const Category = () => {
       <h2 className={styles.title}>Категории</h2>
       <div className={styles.categories}>
         {categories.map((category) => (
-          <div
-            key={category.name}
-            className={styles.card}
-            onClick={() => {
-              setSelectedCategory(category.name);
-              categoryRef.current.scrollIntoView({ behavior: "smooth" });
-            }}
-          >
-            <img
-              src={category.image}
-              alt={category.name}
-              className={styles.img}
-            />
-            <div className={styles.categoryName}>{category.name}</div>
-          </div>
+          <MotionButton>
+            <div
+              key={category.name}
+              className={styles.card}
+              onClick={() => {
+                setSelectedCategory(category.name);
+                categoryRef.current.scrollIntoView({ behavior: "smooth" });
+              }}
+            >
+              <img
+                src={category.image}
+                alt={category.name}
+                className={styles.img}
+              />
+              <div className={styles.categoryName}>{category.name}</div>
+            </div>
+          </MotionButton>
         ))}
       </div>
       <div ref={categoryRef}>
@@ -104,16 +107,18 @@ const Category = () => {
           <div key={selectedCategory}>
             <div style={{ height: "80px" }} />
             <h2 className={styles.title}>{selectedCategory}</h2>
-            <div className={styles.categories} style={{ height: "460px" }}>
+            <div className={styles.categories} style={{ height: "500px" }}>
               {products
                 .filter((product) => product.category === selectedCategory)
                 .map((product) => (
                   <div className={styles.category}>
-                    <ProductCard
-                      key={product.id}
-                      product={product}
-                      addToCart={() => addToCart(product)}
-                    />
+                    <MotionButton>
+                      <ProductCard
+                        key={product.id}
+                        product={product}
+                        addToCart={() => addToCart(product)}
+                      />
+                    </MotionButton>
                   </div>
                 ))}
             </div>

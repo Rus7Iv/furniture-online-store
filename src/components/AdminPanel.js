@@ -9,7 +9,9 @@ import {
 } from "firebase/firestore";
 import { db, auth } from "../lib/firebase";
 import { useRouter } from "next/router";
+import "firebase/firestore";
 import styles from "@/styles/AdminPanel.module.css";
+import Order from "./Orders/Orders";
 
 const AdminPanel = () => {
   const router = useRouter();
@@ -21,6 +23,7 @@ const AdminPanel = () => {
   const [price, setPrice] = useState("");
   const [products, setProducts] = useState([]);
   const [editProductId, setEditProductId] = useState(null);
+  const [orders, setOrders] = useState([]);
 
   const fetchProducts = async () => {
     const productsCollection = collection(db, "products");
@@ -30,6 +33,16 @@ const AdminPanel = () => {
       ...doc.data(),
     }));
     setProducts(productList);
+  };
+
+  const fetchOrders = async () => {
+    const ordersCollection = collection(db, "orders");
+    const ordersSnapshot = await getDocs(ordersCollection);
+    const ordersList = ordersSnapshot.docs.map((doc) => ({
+      id: doc.id,
+      ...doc.data(),
+    }));
+    setOrders(ordersList);
   };
 
   const addProduct = async (e) => {
@@ -99,6 +112,7 @@ const AdminPanel = () => {
 
   useEffect(() => {
     fetchProducts();
+    fetchOrders();
 
     const unsubscribe = auth.onAuthStateChanged((user) => {
       if (user) {
@@ -118,6 +132,21 @@ const AdminPanel = () => {
 
   return (
     <div>
+      <h1>Список заказов</h1>
+      {orders.map((order) => (
+        // <Order key={order.id} {...order} />
+        <Order
+          key={order.id}
+          id={order.id}
+          firstName={order.firstName}
+          lastName={order.lastName}
+          patronymic={order.patronymic}
+          email={order.email}
+          address={order.address}
+          items={order.items}
+          fetchOrders={fetchOrders}
+        />
+      ))}
       <h1 className={styles.title}>Панель администратора</h1>
       <h2 className={styles.title}>Добавить товар</h2>
       <div className={styles.wrapper}>

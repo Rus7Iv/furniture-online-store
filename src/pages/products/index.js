@@ -10,6 +10,7 @@ import "slick-carousel/slick/slick.css";
 import "slick-carousel/slick/slick-theme.css";
 import CustomSnackbar from "@/components/CustomSnackbar";
 import ProductCard from "@/components/ProductCard";
+import Loading from "@/components/Loading";
 
 function ProductsPage() {
   const [products, setProducts] = useState([]);
@@ -24,11 +25,13 @@ function ProductsPage() {
   const [rooms, setRooms] = useState([]);
   const [selectedRoom, setSelectedRoom] = useState("");
   const [currentPage, setCurrentPage] = useState(1);
+  const [isLoading, setIsLoading] = useState(true);
 
   const productsPerPage = 12;
 
   useEffect(() => {
     const fetchProducts = async () => {
+      setIsLoading(true); // Установить isLoading в true при начале загрузки
       const productsCollection = collection(db, "products");
       const productsSnapshot = await getDocs(productsCollection);
       const productList = productsSnapshot.docs.map((doc) => ({
@@ -42,6 +45,8 @@ function ProductsPage() {
         ...new Set(productList.map((product) => product.category)),
       ];
       setCategories(categories);
+
+      setIsLoading(false);
     };
 
     const fetchRooms = async () => {
@@ -178,60 +183,67 @@ function ProductsPage() {
     <>
       <Navigation />
       <main>
-        <h1>Каталог товаров</h1>
-        <div className={styles.filters}>
-          <input
-            className={styles.searchInput}
-            type="text"
-            placeholder="Поиск товаров по названию"
-            value={searchTerm}
-            onChange={handleSearchChange}
-          />
-          <select
-            className={styles.select}
-            value={selectedCategory}
-            onChange={(e) => {
-              setSelectedCategory(e.target.value);
-              searchProducts(searchTerm, e.target.value, selectedRoom);
-            }}
-          >
-            <option value="">Все категории</option>
-            {categories.map((category) => (
-              <option key={category} value={category}>
-                {category}
-              </option>
-            ))}
-          </select>
-          <select
-            className={styles.select}
-            value={selectedRoom}
-            onChange={(e) => {
-              setSelectedRoom(e.target.value);
-              searchProducts(searchTerm, selectedCategory, e.target.value);
-            }}
-          >
-            <option value="">Все комнаты</option>
-            {rooms.map((room) => (
-              <option key={room} value={room}>
-                {room}
-              </option>
-            ))}
-          </select>
-          <select
-            className={styles.select}
-            value={sortOrder}
-            onChange={(e) => {
-              setSortOrder(e.target.value);
-              setCurrentPage(1);
-            }}
-          >
-            <option value="">Сортировать по</option>
-            <option value="name-asc">Названию (А-Я)</option>
-            <option value="price-asc">Цене (по возрастанию)</option>
-            <option value="price-desc">Цене (по убыванию)</option>
-          </select>
-        </div>
-        {/* <div className={styles.productList}>
+        {isLoading ? ( // Если isLoading равен true, то показать анимацию загрузки
+          <>
+            {" "}
+            <Loading />{" "}
+          </>
+        ) : (
+          <>
+            <h1>Каталог товаров</h1>
+            <div className={styles.filters}>
+              <input
+                className={styles.searchInput}
+                type="text"
+                placeholder="Поиск товаров по названию"
+                value={searchTerm}
+                onChange={handleSearchChange}
+              />
+              <select
+                className={styles.select}
+                value={selectedCategory}
+                onChange={(e) => {
+                  setSelectedCategory(e.target.value);
+                  searchProducts(searchTerm, e.target.value, selectedRoom);
+                }}
+              >
+                <option value="">Все категории</option>
+                {categories.map((category) => (
+                  <option key={category} value={category}>
+                    {category}
+                  </option>
+                ))}
+              </select>
+              <select
+                className={styles.select}
+                value={selectedRoom}
+                onChange={(e) => {
+                  setSelectedRoom(e.target.value);
+                  searchProducts(searchTerm, selectedCategory, e.target.value);
+                }}
+              >
+                <option value="">Все комнаты</option>
+                {rooms.map((room) => (
+                  <option key={room} value={room}>
+                    {room}
+                  </option>
+                ))}
+              </select>
+              <select
+                className={styles.select}
+                value={sortOrder}
+                onChange={(e) => {
+                  setSortOrder(e.target.value);
+                  setCurrentPage(1);
+                }}
+              >
+                <option value="">Сортировать по</option>
+                <option value="name-asc">Названию (А-Я)</option>
+                <option value="price-asc">Цене (по возрастанию)</option>
+                <option value="price-desc">Цене (по убыванию)</option>
+              </select>
+            </div>
+            {/* <div className={styles.productList}>
           {paginatedProducts.map((product) => (
             <ProductCard
               key={product.id}
@@ -256,40 +268,44 @@ function ProductsPage() {
             </ul>
           )}
         </div> */}
-        <div className={styles.center_list}>
-          <ul className={styles.list}>
-            {paginatedProducts.map((product) => (
-              <ProductCard
-                key={product.id}
-                product={product}
-                addToCart={addToCart}
-              />
-            ))}
-          </ul>
-        </div>
-        <div className={styles.pagination}>
-          <button
-            onClick={() => handlePageChange(currentPage - 1)}
-            disabled={currentPage === 1}
-          >
-            {"<"}
-          </button>
-          {Array.from({ length: totalPages }, (_, i) => i + 1).map((page) => (
-            <button
-              key={page}
-              onClick={() => handlePageChange(page)}
-              className={currentPage === page ? styles.active : ""}
-            >
-              {page}
-            </button>
-          ))}
-          <button
-            onClick={() => handlePageChange(currentPage + 1)}
-            disabled={currentPage === totalPages}
-          >
-            {">"}
-          </button>
-        </div>
+            <div className={styles.center_list}>
+              <ul className={styles.list}>
+                {paginatedProducts.map((product) => (
+                  <ProductCard
+                    key={product.id}
+                    product={product}
+                    addToCart={addToCart}
+                  />
+                ))}
+              </ul>
+            </div>
+            <div className={styles.pagination}>
+              <button
+                onClick={() => handlePageChange(currentPage - 1)}
+                disabled={currentPage === 1}
+              >
+                {"<"}
+              </button>
+              {Array.from({ length: totalPages }, (_, i) => i + 1).map(
+                (page) => (
+                  <button
+                    key={page}
+                    onClick={() => handlePageChange(page)}
+                    className={currentPage === page ? styles.active : ""}
+                  >
+                    {page}
+                  </button>
+                )
+              )}
+              <button
+                onClick={() => handlePageChange(currentPage + 1)}
+                disabled={currentPage === totalPages}
+              >
+                {">"}
+              </button>
+            </div>
+          </>
+        )}
       </main>
       <Footer />
       <CustomSnackbar

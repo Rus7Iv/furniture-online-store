@@ -2,6 +2,7 @@ import { useEffect, useState } from "react";
 import ProductCard from "../components/ProductCard";
 import styles from "../styles/RecentlyViewed.module.css";
 import CustomSnackbar from "./CustomSnackbar";
+import { MotionButton } from "./MotionButton/MotionButton";
 
 function RecentlyViewed() {
   const [viewedPages, setViewedPages] = useState([]);
@@ -56,13 +57,15 @@ function RecentlyViewed() {
     <div>
       <div style={{ height: "80px" }} />
       <h3 className={styles.title}>Вы недавно смотрели:</h3>
-      <div className={styles.list} style={{ height: "460px" }}>
+      <div className={styles.list} style={{ height: "500px" }}>
         {viewedPages.slice(0, 3).map((product) => (
           <div className={styles.item} key={product.id}>
-            <ProductCard
-              product={product}
-              addToCart={() => addToCart(product)}
-            />
+            <MotionButton>
+              <ProductCard
+                product={product}
+                addToCart={() => addToCart(product)}
+              />
+            </MotionButton>
           </div>
         ))}
       </div>

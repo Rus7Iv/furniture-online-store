@@ -15,6 +15,7 @@
     "@mui/material": "^5.12.3",
     "bootstrap": "^5.2.3",
     "firebase": "^9.22.0",
+    "framer-motion": "^10.12.16",
     "jquery": "^3.6.4",
     "next": "13.3.0",
     "popper.js": "^1.16.1",

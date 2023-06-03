@@ -2,6 +2,7 @@ import React, { useState, useEffect } from "react";
 import { auth } from "../../lib/firebase";
 import Link from "next/link";
 import styles from "../../styles/Account.module.css";
+import { MotionButtonIcons } from "../MotionButton/MotionButtonIcons";
 
 const Account = () => {
   const [error, setError] = useState(null);
@@ -39,18 +40,9 @@ const Account = () => {
       </h1>
 
       <div className={styles.links}>
-        <Link href={"/cart"} className={styles.link}>
-          <div className={styles.icons}>🛒 </div>
-          Корзина
-        </Link>
-        <Link href={"/favorites"} className={styles.link}>
-          <div className={styles.icons}>❤️️ </div>
-          Избранное
-        </Link>
-        <Link href={"/orders"} className={styles.link}>
-          <div className={styles.icons}>📝 </div>
-          Заказы
-        </Link>
+        <MotionButtonIcons href={"/orders"} icons={"🛒"} text={"Корзина"} />
+        <MotionButtonIcons href={"/orders"} icons={"❤️"} text={"Избранное"} />
+        <MotionButtonIcons href={"/orders"} icons={"📝"} text={"Заказы"} />
       </div>
 
       <button className={`${styles.logoutButton} btns`} onClick={handleLogout}>
