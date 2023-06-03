@@ -17,13 +17,16 @@
   display: flex;
   flex-wrap: nowrap;
   overflow-x: auto;
-  scrollbar-width: thin;
+  /* scrollbar-width: thin; */
+  scrollbar-width: none;
   scrollbar-color: #ccc transparent;
   padding-right: 40px;
+  height: 360px;
 }
 
 .categories::-webkit-scrollbar {
   height: 7px;
+  width: 0;
   background: rgba(255, 255, 255, 0.9);
 }
 

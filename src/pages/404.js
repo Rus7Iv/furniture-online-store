@@ -24,8 +24,9 @@ export default function Custom404() {
               href="/"
               style={{
                 color: "#555",
-                textDecoration: "none",
-                fontWeight: "bold",
+                textDecoration: "underline",
+                fontWeight: "500",
+                color: "black",
               }}
             >
               {" "}

@@ -2,6 +2,7 @@ import React, { useState, useEffect } from "react";
 import { Navbar, Nav, NavDropdown, Container } from "react-bootstrap";
 import styles from "../styles/Navbar.module.css";
 import Link from "next/link";
+import { MotionButton } from "./MotionButton/MotionButton";
 
 const Navigation = () => {
   const [isAuthenticated, setIsAuthenticated] = useState(false);
@@ -27,35 +28,45 @@ const Navigation = () => {
         <Navbar.Toggle aria-controls="basic-navbar-nav" />
         <Navbar.Collapse id="basic-navbar-nav">
           <Nav className="me-auto">
-            <Link href="/" className={styles.link}>
-              Главная
-            </Link>
-            <Link href="/products" className={styles.link}>
-              Каталог
-            </Link>
-            <Link href="/cart" className={styles.link}>
-              Корзина
-            </Link>
+            <MotionButton>
+              <Link href="/" className={styles.link}>
+                Главная
+              </Link>
+            </MotionButton>
+            <MotionButton>
+              <Link href="/products" className={styles.link}>
+                Каталог
+              </Link>
+            </MotionButton>
+            <MotionButton>
+              <Link href="/cart" className={styles.link}>
+                Корзина
+              </Link>
+            </MotionButton>
           </Nav>
           {isAuthenticated ? (
-            <Link
-              href={"/account"}
-              className={styles.link}
-              style={{
-                fontSize: "20px",
-                textShadow: "2px 2px 6px rgba(0, 0, 0, 0.5)",
-              }}
-            >
-              🏠
-            </Link>
+            <MotionButton>
+              <Link
+                href={"/account"}
+                className={styles.link}
+                style={{
+                  fontSize: "20px",
+                  textShadow: "2px 2px 6px rgba(0, 0, 0, 0.5)",
+                }}
+              >
+                🏠
+              </Link>
+            </MotionButton>
           ) : (
-            <Link
-              href={"/account"}
-              className={`${styles.link} ${styles.btn_lk}`}
-              onClick={() => handleAuthentication(true)}
-            >
-              Вход
-            </Link>
+            <MotionButton>
+              <Link
+                href={"/account"}
+                className={`${styles.link} ${styles.btn_lk}`}
+                onClick={() => handleAuthentication(true)}
+              >
+                Вход
+              </Link>
+            </MotionButton>
           )}
         </Navbar.Collapse>
       </Container>
