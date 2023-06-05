@@ -40,8 +40,12 @@ const Account = () => {
       </h1>
 
       <div className={styles.links}>
-        <MotionButtonIcons href={"/orders"} icons={"🛒"} text={"Корзина"} />
-        <MotionButtonIcons href={"/orders"} icons={"❤️"} text={"Избранное"} />
+        <MotionButtonIcons href={"/cart"} icons={"🛒"} text={"Корзина"} />
+        <MotionButtonIcons
+          href={"/favorites"}
+          icons={"❤️"}
+          text={"Избранное"}
+        />
         <MotionButtonIcons href={"/orders"} icons={"📝"} text={"Заказы"} />
       </div>
 

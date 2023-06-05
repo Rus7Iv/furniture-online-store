@@ -1,13 +1,13 @@
 import Navigation from "@/components/Navigation";
 import Footer from "@/components/Footer";
-import Checkout from "@/components/Checkout";
 
-export default function CheckoutPage() {
+export default function OrdersPage() {
   return (
     <>
       <Navigation />
       <main>
-        <Checkout />
+        <h1>Заказы</h1>
+        <h3>Здесь будут отображаться ваши заказы</h3>
       </main>
       <Footer />
     </>
