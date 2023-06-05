@@ -3,7 +3,7 @@
   border-radius: 20px;
   width: 200px;
   height: 200px;
-  margin: 20px 2px 60px 40px;
+  margin: 50px 2px 60px 40px;
   padding: 20px;
   text-align: center;
   position: relative;
@@ -17,11 +17,10 @@
   display: flex;
   flex-wrap: nowrap;
   overflow-x: auto;
-  /* scrollbar-width: thin; */
   scrollbar-width: none;
   scrollbar-color: #ccc transparent;
   padding-right: 40px;
-  height: 360px;
+  height: 350px;
 }
 
 .categories::-webkit-scrollbar {
@@ -68,9 +67,98 @@
   margin-top: 40px;
 }
 
+.categoriesContainer {
+  position: relative;
+  display: flex;
+  align-items: center;
+}
+
+.categoriesContainer::before {
+  content: "";
+  height: 340px;
+  position: absolute;
+  top: 0;
+  bottom: 0;
+  left: 0;
+  width: 20px;
+  background: linear-gradient(to left, rgba(255, 255, 255, 0), white);
+  z-index: 1;
+}
+
+.categoriesContainer::after {
+  content: "";
+  height: 340px;
+  position: absolute;
+  top: 0;
+  bottom: 0;
+  right: 0;
+  width: 20px;
+  background: linear-gradient(to right, rgba(255, 255, 255, 0), white);
+  z-index: 0.9;
+}
+
+.scrollButtonLeft,
+.scrollButtonRight {
+  position: absolute;
+  width: 40px;
+  height: 40px;
+  background-color: white;
+  border-radius: 50%;
+  border: none;
+  cursor: pointer;
+  z-index: 1;
+  filter: drop-shadow(0px 2px 4px rgba(0, 0, 0, 0.25));
+}
+
+/* .scrollButtonLeft::before,
+.scrollButtonRight::before {
+  content: "";
+  position: absolute;
+  width: 0;
+  height: 0;
+  border-style: solid;
+  top: 50%;
+  left: 50%;
+  transform: translate(-50%, -50%);
+} */
+
+.scrollButtonLeft::before,
+.scrollButtonRight::before {
+  content: "";
+  position: absolute;
+  width: 15px;
+  height: 15px;
+  top: 50%;
+  left: 50%;
+  border-top: 3px solid black;
+  border-right: 3px solid black;
+  /* transform: translate(-60%, -50%) rotate(45deg); */
+}
+
+.scrollButtonRight::before {
+  transform: translate(-60%, -50%) rotate(45deg);
+}
+
+.scrollButtonLeft::before {
+  transform: translate(-40%, -50%) rotate(-135deg);
+}
+
+.scrollButtonLeft {
+  left: -20px;
+}
+
+.scrollButtonRight {
+  right: -20px;
+}
+
 @media all and (max-width: 500px) {
   .text_href {
     text-decoration: underline;
     text-underline-offset: 6px;
+  }
+
+  .scrollButtonLeft,
+  .scrollButtonRight {
+    display: none;
   }
 }
