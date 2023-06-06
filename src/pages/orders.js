@@ -1,13 +1,17 @@
 import Navigation from "@/components/Navigation";
 import Footer from "@/components/Footer";
+import { useAuthState } from "react-firebase-hooks/auth";
+import { auth } from "../lib/firebase";
+import UserOrders from "../components/Orders/UserOrders";
 
 export default function OrdersPage() {
+  const [user] = useAuthState(auth);
+
   return (
     <>
       <Navigation />
       <main>
-        <h1>Заказы</h1>
-        <h3>Здесь будут отображаться ваши заказы</h3>
+        <UserOrders />
       </main>
       <Footer />
     </>

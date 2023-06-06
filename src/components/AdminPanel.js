@@ -11,7 +11,8 @@ import { db, auth } from "../lib/firebase";
 import { useRouter } from "next/router";
 import "firebase/firestore";
 import styles from "@/styles/AdminPanel.module.css";
-import Order from "./Orders/Orders";
+import Orders from "./Orders/Orders";
+import OrdersList from "./Orders/OrdersList";
 
 const AdminPanel = () => {
   const router = useRouter();
@@ -132,10 +133,8 @@ const AdminPanel = () => {
 
   return (
     <div>
-      <h1>Список заказов</h1>
-      {orders.map((order) => (
-        // <Order key={order.id} {...order} />
-        <Order
+      {/* {orders.map((order) => (
+        <Orders
           key={order.id}
           id={order.id}
           firstName={order.firstName}
@@ -146,7 +145,8 @@ const AdminPanel = () => {
           items={order.items}
           fetchOrders={fetchOrders}
         />
-      ))}
+      ))} */}
+      <OrdersList />
       <h1 className={styles.title}>Панель администратора</h1>
       <h2 className={styles.title}>Добавить товар</h2>
       <div className={styles.wrapper}>

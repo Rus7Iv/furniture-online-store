@@ -67,6 +67,34 @@
   margin-top: 40px;
 }
 
+.blur_edges {
+  position: relative;
+}
+
+.blur_edges::before {
+  content: "";
+  position: absolute;
+  height: 480px;
+  top: 0;
+  bottom: 0;
+  left: 0;
+  width: 20px;
+  background: linear-gradient(to left, rgba(255, 255, 255, 0), white);
+  z-index: 1;
+}
+
+.blur_edges::after {
+  content: "";
+  position: absolute;
+  height: 480px;
+  top: 0;
+  bottom: 0;
+  right: 0;
+  width: 20px;
+  background: linear-gradient(to right, rgba(255, 255, 255, 0), white);
+  z-index: 0.9;
+}
+
 .categoriesContainer {
   position: relative;
   display: flex;
@@ -110,29 +138,16 @@
   filter: drop-shadow(0px 2px 4px rgba(0, 0, 0, 0.25));
 }
 
-/* .scrollButtonLeft::before,
-.scrollButtonRight::before {
-  content: "";
-  position: absolute;
-  width: 0;
-  height: 0;
-  border-style: solid;
-  top: 50%;
-  left: 50%;
-  transform: translate(-50%, -50%);
-} */
-
 .scrollButtonLeft::before,
 .scrollButtonRight::before {
   content: "";
   position: absolute;
-  width: 15px;
-  height: 15px;
+  width: 12px;
+  height: 12px;
   top: 50%;
   left: 50%;
-  border-top: 3px solid black;
-  border-right: 3px solid black;
-  /* transform: translate(-60%, -50%) rotate(45deg); */
+  border-top: 2px solid black;
+  border-right: 2px solid black;
 }
 
 .scrollButtonRight::before {

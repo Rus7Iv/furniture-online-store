@@ -1,9 +1,7 @@
 import React, { useState, useEffect } from "react";
 import { useAuth } from "../lib/auth";
 import styles from "../styles/CheckoutPage.module.css";
-
-import { collection, addDoc } from "firebase/firestore";
-import { db } from "../lib/firebase";
+import { getDatabase, ref, push, child } from "firebase/database";
 
 const Checkout = () => {
   const [firstName, setFirstName] = useState("");
@@ -32,10 +30,10 @@ const Checkout = () => {
 
   const handleSubmit = (e) => {
     e.preventDefault();
-    // отправка данных на сервер и обработка заказа
 
-    const collectionRef = collection(db, "orders");
-    addDoc(collectionRef, {
+    const dbRef = ref(getDatabase());
+    const collectionRef = ref(getDatabase(), "orders");
+    const newOrderRef = push(child(collectionRef, user.uid), {
       firstName,
       lastName,
       patronymic,
@@ -49,6 +47,7 @@ const Checkout = () => {
       })),
       total,
     });
+
     // очистка корзины
     localStorage.setItem("cart", JSON.stringify([]));
     setCart([]);
@@ -121,9 +120,7 @@ const Checkout = () => {
             Адрес доставки:
           </label>
           <textarea
-            // className={styles.checkout_textarea}
             className={styles.checkout_input}
-            // ===
             id="address"
             name="address"
             value={address}
