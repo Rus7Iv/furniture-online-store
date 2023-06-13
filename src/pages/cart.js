@@ -1,9 +1,9 @@
 import { useState, useEffect } from "react";
-import Navigation from "@/components/Navigation";
-import Footer from "@/components/Footer";
+import Navigation from "@/components/Navigation/Navigation";
+import Footer from "@/components/Footer/Footer";
 import { useAuth } from "../lib/auth";
-import styles from "../styles/CartPage.module.css";
 import Link from "next/link";
+import styles from "../styles/CartPage.module.css";
 
 const CartPage = () => {
   const [cart, setCart] = useState([]);
@@ -54,7 +54,6 @@ const CartPage = () => {
         typeof updatedItems[index].quantity !== "number" ||
         updatedItems[index].quantity === 1
       ) {
-        // remove the item if its quantity is 1 or less
         removeItem(index);
         return;
       }
@@ -82,14 +81,18 @@ const CartPage = () => {
                 <li key={index} className={styles.item}>
                   <div className={styles.image}>
                     {
-                      /* <img src={item.image[0]} alt={item.name} /> */
                       <Link href={`/products/${item.id}`}>
                         <img src={item.image[0]} alt={item.name} />
                       </Link>
                     }
                   </div>
                   <div className={styles.details}>
-                    <h3 className={styles.name}>{item.title}</h3>
+                    <Link
+                      href={`/products/${item.id}`}
+                      style={{ color: "black", textDecoration: "none" }}
+                    >
+                      <h3 className={styles.name}>{item.title}</h3>
+                    </Link>
 
                     <h4 className={styles.price}>
                       {item.price.toLocaleString()} руб.
@@ -126,11 +129,6 @@ const CartPage = () => {
                 <Link
                   className={`${styles.checkout_btn} btns`}
                   href="/checkout"
-                  // style={{
-                  //   display: "flex",
-                  //   justifyContent: "center",
-                  //   alignItems: "center",
-                  // }}
                 >
                   Оформить заказ
                 </Link>

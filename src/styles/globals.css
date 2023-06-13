@@ -18,15 +18,15 @@ main {
 }
 
 body::-webkit-scrollbar {
-  width: 8px; /* установите нужную ширину */
+  width: 8px;
 }
 
 body::-webkit-scrollbar-track {
-  background-color: #f1f1f1; /* установите нужный цвет фона */
+  background-color: #f1f1f1;
 }
 
 body::-webkit-scrollbar-thumb {
-  background-color: #888; /* установите нужный цвет и стиль ползунка */
+  background-color: #888;
   border-radius: 10px;
 }
 

@@ -1,7 +1,8 @@
-import Footer from "@/components/Footer";
-import Navigation from "@/components/Navigation";
+import Footer from "@/components/Footer/Footer";
+import Navigation from "@/components/Navigation/Navigation";
 import Link from "next/link";
 import { useRouter } from "next/router";
+import styles from "../styles/404.module.css";
 
 export default function Custom404() {
   const router = useRouter();
@@ -9,30 +10,16 @@ export default function Custom404() {
   return (
     <>
       <Navigation />
-      <main>
-        <div
-          style={{
-            width: "100%",
-            textAlign: "center",
-          }}
-        >
-          <h1 style={{ fontWeight: "bold" }}>404 - Страница не найдена</h1>
-          <p style={{ width: "100%", textAlign: "center", marginTop: "30px" }}>
+      <main className={styles.container}>
+        <div className={styles.wrapper}>
+          <h1 className={styles.title}>404 - Страница не найдена</h1>
+          <p className={styles.text}>
             Кажется, вы попали на страницу, которой не существует. Пожалуйста,
             вернитесь на{" "}
-            <Link
-              href="/"
-              style={{
-                color: "#555",
-                textDecoration: "underline",
-                fontWeight: "500",
-                color: "black",
-              }}
-            >
+            <Link href="/" className={styles.link}>
               {" "}
               главную страницу
             </Link>
-            .
           </p>
           <button onClick={() => router.back()} className="btns">
             Назад

@@ -1,16 +1,15 @@
 import { collection, getDocs } from "firebase/firestore";
 import { db } from "@/lib/firebase";
 import { useState, useEffect } from "react";
-import styles from "../../styles/ProductList.module.css";
-import { useMemo } from "react"; // Добавляем useMemo
-
-import Navigation from "@/components/Navigation";
-import Footer from "@/components/Footer";
+import { useMemo } from "react";
+import Navigation from "@/components/Navigation/Navigation";
+import Footer from "@/components/Footer/Footer";
 import "slick-carousel/slick/slick.css";
 import "slick-carousel/slick/slick-theme.css";
 import CustomSnackbar from "@/components/CustomSnackbar";
-import ProductCard from "@/components/ProductCard";
-import Loading from "@/components/Loading";
+import ProductCard from "@/components/ProductCard/ProductCard";
+import Loading from "@/components/Loading/Loading";
+import styles from "../products/styles/ProductList.module.css";
 
 function ProductsPage() {
   const [products, setProducts] = useState([]);
@@ -31,7 +30,7 @@ function ProductsPage() {
 
   useEffect(() => {
     const fetchProducts = async () => {
-      setIsLoading(true); // Установить isLoading в true при начале загрузки
+      setIsLoading(true);
       const productsCollection = collection(db, "products");
       const productsSnapshot = await getDocs(productsCollection);
       const productList = productsSnapshot.docs.map((doc) => ({
@@ -101,7 +100,7 @@ function ProductsPage() {
   };
 
   const searchProducts = (searchTerm, category, room) => {
-    let searchedProducts = [...products]; // Создаем копию всех продуктов
+    let searchedProducts = [...products];
     if (searchTerm !== "") {
       searchedProducts = searchedProducts.filter((product) =>
         product.title.toLowerCase().includes(searchTerm.toLowerCase())
@@ -183,7 +182,7 @@ function ProductsPage() {
     <>
       <Navigation />
       <main>
-        {isLoading ? ( // Если isLoading равен true, то показать анимацию загрузки
+        {isLoading ? (
           <>
             {" "}
             <Loading />{" "}
@@ -208,11 +207,13 @@ function ProductsPage() {
                 }}
               >
                 <option value="">Все категории</option>
-                {categories.map((category) => (
-                  <option key={category} value={category}>
-                    {category}
-                  </option>
-                ))}
+                {categories
+                  .filter((c) => c)
+                  .map((category) => (
+                    <option key={category} value={category}>
+                      {category}
+                    </option>
+                  ))}
               </select>
               <select
                 className={styles.select}
@@ -223,11 +224,13 @@ function ProductsPage() {
                 }}
               >
                 <option value="">Все комнаты</option>
-                {rooms.map((room) => (
-                  <option key={room} value={room}>
-                    {room}
-                  </option>
-                ))}
+                {rooms
+                  .filter((c) => c)
+                  .map((room) => (
+                    <option key={room} value={room}>
+                      {room}
+                    </option>
+                  ))}
               </select>
               <select
                 className={styles.select}
@@ -243,67 +246,48 @@ function ProductsPage() {
                 <option value="price-desc">Цене (по убыванию)</option>
               </select>
             </div>
-            {/* <div className={styles.productList}>
-          {paginatedProducts.map((product) => (
-            <ProductCard
-              key={product.id}
-              product={product}
-              addToCart={addToCart}
-            />
-          ))}
-        </div>
-        <div className={styles.pagination}>
-          {totalPages > 1 && (
-            <ul>
-              {Array.from(Array(totalPages), (e, i) => (
-                <li key={i}>
-                  <button
-                    className={currentPage === i + 1 ? styles.activePage : ""}
-                    onClick={() => handlePageChange(i + 1)}
-                  >
-                    {i + 1}
-                  </button>
-                </li>
-              ))}
-            </ul>
-          )}
-        </div> */}
             <div className={styles.center_list}>
-              <ul className={styles.list}>
-                {paginatedProducts.map((product) => (
-                  <ProductCard
-                    key={product.id}
-                    product={product}
-                    addToCart={addToCart}
-                  />
-                ))}
-              </ul>
-            </div>
-            <div className={styles.pagination}>
-              <button
-                onClick={() => handlePageChange(currentPage - 1)}
-                disabled={currentPage === 1}
-              >
-                {"<"}
-              </button>
-              {Array.from({ length: totalPages }, (_, i) => i + 1).map(
-                (page) => (
-                  <button
-                    key={page}
-                    onClick={() => handlePageChange(page)}
-                    className={currentPage === page ? styles.active : ""}
-                  >
-                    {page}
-                  </button>
-                )
+              {paginatedProducts.length === 0 ? (
+                <p>Ничего не найдено</p>
+              ) : (
+                <ul className={styles.list}>
+                  {paginatedProducts.map((product) => (
+                    <ProductCard
+                      key={product.id}
+                      product={product}
+                      addToCart={addToCart}
+                    />
+                  ))}
+                </ul>
               )}
-              <button
-                onClick={() => handlePageChange(currentPage + 1)}
-                disabled={currentPage === totalPages}
-              >
-                {">"}
-              </button>
             </div>
+            {paginatedProducts.length > 0 && (
+              <div className={styles.pagination}>
+                <button
+                  onClick={() => handlePageChange(currentPage - 1)}
+                  disabled={currentPage === 1}
+                >
+                  {"<"}
+                </button>
+                {Array.from({ length: totalPages }, (_, i) => i + 1).map(
+                  (page) => (
+                    <button
+                      key={page}
+                      onClick={() => handlePageChange(page)}
+                      className={currentPage === page ? styles.active : ""}
+                    >
+                      {page}
+                    </button>
+                  )
+                )}
+                <button
+                  onClick={() => handlePageChange(currentPage + 1)}
+                  disabled={currentPage === totalPages}
+                >
+                  {">"}
+                </button>
+              </div>
+            )}
           </>
         )}
       </main>

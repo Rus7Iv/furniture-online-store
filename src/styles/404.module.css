@@ -1,0 +1,32 @@
+.container {
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  flex-direction: column;
+}
+
+.wrapper {
+  width: 100%;
+  text-align: center;
+}
+
+.title {
+  font-weight: bold;
+}
+
+.text {
+  width: 100%;
+  text-align: center;
+  margin-top: 30px;
+}
+
+.link {
+  color: #555;
+  text-decoration: underline;
+  font-weight: 500;
+  color: black;
+}
+
+.link:hover {
+  color: black;
+}

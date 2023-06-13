@@ -3,7 +3,7 @@ import Login from "./Login";
 import Signup from "./Signup";
 import { auth } from "../../lib/firebase";
 import Account from "./Account";
-import styles from "../../styles/Auth.module.css";
+import styles from "../Authentication/styles/Auth.module.css";
 
 const Auth = () => {
   const [showSignup, setShowSignup] = useState(false);
@@ -23,12 +23,6 @@ const Auth = () => {
   const handleSuccessfulAuth = () => {
     setIsAuthenticated(true);
     setShowSignup(false);
-  };
-
-  const handleLogout = () => {
-    auth.signOut();
-    setIsAuthenticated(false);
-    localStorage.removeItem("isAuthenticated");
   };
 
   return (

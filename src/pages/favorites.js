@@ -2,17 +2,16 @@ import { useState, useEffect } from "react";
 import { useRouter } from "next/router";
 import { doc, getDoc } from "firebase/firestore";
 import { db } from "../lib/firebase";
-import styles from "../styles/FavoritesPage.module.css";
-import Navigation from "@/components/Navigation";
-import Footer from "@/components/Footer";
-import ProductCard from "@/components/ProductCard";
+import Navigation from "@/components/Navigation/Navigation";
+import Footer from "@/components/Footer/Footer";
+import ProductCard from "@/components/ProductCard/ProductCard";
 import CustomSnackbar from "@/components/CustomSnackbar";
+import styles from "../styles/FavoritesPage.module.css";
 
 const FavoritesPage = () => {
   const [favorites, setFavorites] = useState([]);
   const [showSuccessMessage, setShowSuccessMessage] = useState(false);
   const [showDuplicateMessage, setShowDuplicateMessage] = useState(false);
-  const router = useRouter();
 
   useEffect(() => {
     const fetchFavorites = async () => {
@@ -78,11 +77,13 @@ const FavoritesPage = () => {
         <div className={styles.page}>
           {favorites.length > 0 ? (
             favorites.map((favorite) => (
-              <ProductCard
-                key={favorite.id}
-                product={favorite}
-                addToCart={addToCart}
-              />
+              <div className={styles.item}>
+                <ProductCard
+                  key={favorite.id}
+                  product={favorite}
+                  addToCart={addToCart}
+                />
+              </div>
             ))
           ) : (
             <p className={styles.empty}>В избранном пока нет товаров</p>

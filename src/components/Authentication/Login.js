@@ -5,8 +5,8 @@ import {
   onAuthStateChanged,
 } from "firebase/auth";
 import { auth } from "../../lib/firebase";
-import styles from "../../styles/SingupLogin.module.css";
 import Account from "./Account";
+import styles from "../Authentication/styles/SingupLogin.module.css";
 
 const Login = () => {
   const [email, setEmail] = useState("");
@@ -44,10 +44,6 @@ const Login = () => {
         setError("Произошла ошибка при входе. Пожалуйста, попробуйте еще раз.");
       }
     }
-  };
-
-  const handleLogout = () => {
-    signOut(auth);
   };
 
   return (

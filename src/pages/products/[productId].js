@@ -2,9 +2,8 @@ import { useRouter } from "next/router";
 import { useState, useEffect } from "react";
 import { doc, getDoc } from "firebase/firestore";
 import { db } from "../../lib/firebase";
-import styles from "../../styles/ProductPage.module.css";
-import Navigation from "@/components/Navigation";
-import Footer from "@/components/Footer";
+import Navigation from "@/components/Navigation/Navigation";
+import Footer from "@/components/Footer/Footer";
 import Slider from "react-slick";
 import "slick-carousel/slick/slick.css";
 import "slick-carousel/slick/slick-theme.css";
@@ -12,7 +11,8 @@ import CustomPrevArrow from "@/components/Arrows/CustomPrevArrow";
 import CustomNextArrow from "@/components/Arrows/CustomNextArrow";
 import CustomSnackbar from "@/components/CustomSnackbar";
 import { Modal } from "react-bootstrap";
-import Loading from "@/components/Loading";
+import Loading from "@/components/Loading/Loading";
+import styles from "../products/styles/ProductPage.module.css";
 
 const ProductPage = () => {
   const router = useRouter();
@@ -33,7 +33,6 @@ const ProductPage = () => {
       if (productSnapshot.exists()) {
         setProduct({ id: productSnapshot.id, ...productSnapshot.data() });
       } else {
-        // Если продукт не найден, перенаправляем на страницу 404
         router.replace("/404");
       }
     };
@@ -58,10 +57,8 @@ const ProductPage = () => {
     const existingProduct = cart.find((item) => item.id === product.id);
 
     if (existingProduct) {
-      // Если товар уже есть в корзине, увеличиваем количество на 1
       existingProduct.quantity++;
     } else {
-      // Если товара нет в корзине, добавляем его
       cart.push({ ...product, quantity: 1 });
     }
 
@@ -127,10 +124,6 @@ const ProductPage = () => {
     setShowSuccessMessage(false);
   };
 
-  const handleDuplicateMessage = () => {
-    setShowDuplicateMessage(true);
-  };
-
   const handleCloseDuplicateMessage = (event, reason) => {
     if (reason === "clickaway") {
       return;
@@ -177,18 +170,6 @@ const ProductPage = () => {
     return (
       <>
         <Navigation />
-        {/* <main
-          style={{
-            display: "flex",
-            alignItems: "center",
-            justifyContent: "center",
-          }}
-        >
-          <div className={styles.loading}>
-            <div className={styles.spinner}></div>
-            <p>Загрузка...</p>
-          </div>
-        </main> */}
         <Loading />
         <Footer />
       </>

@@ -1,8 +1,8 @@
-import Navigation from "@/components/Navigation";
-import Footer from "@/components/Footer";
-import Category from "../components/Category";
-import Promo from "@/components/Promo";
-import RecentlyViewed from "@/components/RecentlyViewed";
+import Navigation from "@/components/Navigation/Navigation";
+import Footer from "@/components/Footer/Footer";
+import Category from "../components/Category/Category";
+import Promo from "@/components/Promo/Promo";
+import RecentlyViewed from "@/components/RecentlyViewed/RecentlyViewed";
 
 export default function Home() {
   return (

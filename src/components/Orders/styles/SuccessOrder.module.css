@@ -1,0 +1,48 @@
+.page {
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  flex-direction: column;
+}
+
+.links {
+  display: flex;
+  justify-content: space-between;
+  width: 490px;
+  margin-top: 20px;
+}
+
+.link {
+  color: black;
+  font-weight: 600;
+  font-size: 20px;
+  transform: translateY(-30px);
+}
+
+.link:hover {
+  color: black;
+}
+
+.success {
+  font-size: 100px;
+  transform: translateY(-70px);
+}
+
+.title {
+  text-align: center;
+  transform: translateY(-50px);
+  font-size: 40px;
+}
+
+@media all and (max-width: 760px) {
+  .links {
+    width: 240px;
+    justify-content: center;
+    flex-direction: column;
+  }
+
+  .link {
+    text-align: center;
+    margin-top: 40px;
+  }
+}

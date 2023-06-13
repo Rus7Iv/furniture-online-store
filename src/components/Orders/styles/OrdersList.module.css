@@ -1,0 +1,196 @@
+.card {
+  border: none;
+  border-radius: 20px;
+  width: 100%;
+  padding: 20px;
+  text-align: center;
+  position: relative;
+  box-shadow: 0 8px 16px rgba(0, 0, 0, 0.2);
+  background-color: white;
+  margin: 20px 0 40px 0;
+  transition: box-shadow 0.2s ease-in-out;
+}
+
+.card:hover {
+  box-shadow: 0 16px 32px rgba(0, 0, 0, 0.3);
+}
+
+.card::before {
+  display: block;
+  position: absolute;
+  top: 0;
+  left: 0;
+  width: 100%;
+  height: 100%;
+  border-radius: 20px;
+  opacity: 0;
+  background: linear-gradient(180deg, #000000 0%, #ffffff 100%);
+  transition: opacity 0.2s ease-in-out;
+}
+
+.card:hover::before {
+  opacity: 0.05;
+}
+
+.orders {
+  list-style: none;
+  padding: 0;
+}
+
+.order {
+  background-color: #f3f3f3;
+  border: 1px solid #ccc;
+  padding: 1rem;
+  margin-bottom: 1rem;
+}
+
+.empty {
+  text-align: center;
+}
+
+.empty_p {
+  display: flex;
+  justify-content: center;
+  font-size: 20px;
+  margin-top: 40px;
+}
+
+.price {
+  position: absolute;
+  bottom: 10px;
+  font-size: 20px;
+  margin-left: 15px;
+  font-weight: 500;
+}
+
+.status_btns {
+  width: 160px;
+}
+
+.statusButtons {
+  display: flex;
+  flex-wrap: wrap;
+  justify-content: center;
+  margin: -5px;
+  margin-top: 20px;
+  margin-bottom: 10px;
+}
+
+.statusButtons button {
+  margin: 0px;
+  border: none;
+  padding: 10px 20px;
+  border-radius: 0;
+  transition: all 0.2s ease-in-out;
+}
+
+.statusButtons button:first-of-type {
+  border-top-left-radius: 10px;
+  border-bottom-left-radius: 10px;
+}
+
+.statusButtons button:last-of-type {
+  border-top-right-radius: 10px;
+  border-bottom-right-radius: 10px;
+}
+
+.yellowButton {
+  background-color: yellow;
+  color: #000;
+}
+
+.date {
+  display: flex;
+  position: absolute;
+  top: 20px;
+  right: 20px;
+}
+
+.user_date {
+  display: flex;
+  position: absolute;
+  top: 20px;
+  right: 20px;
+}
+
+.title {
+  margin-top: 20px;
+}
+
+.cancel,
+.refund {
+  display: flex;
+  position: absolute;
+  right: 0;
+  bottom: 5px;
+}
+
+.input {
+  width: 100%;
+  margin: 10px 0 10px 0;
+  font-size: 16px;
+  padding: 12px 16px;
+  border: none;
+  border-radius: 10px;
+  box-shadow: 0 5px 10px rgba(0, 0, 0, 0.2);
+  transition: box-shadow 0.2s ease-in-out;
+  overflow: auto;
+}
+
+.input:focus {
+  outline: none;
+  box-shadow: 0 8px 16px rgba(0, 0, 0, 0.3);
+}
+
+@media all and (max-width: 760px) {
+  .statusButtons {
+    width: 320px;
+  }
+  .statusButtons button:first-of-type {
+    border-top-left-radius: 10px;
+    border-bottom-left-radius: 0;
+  }
+
+  .statusButtons button:nth-of-type(2) {
+    border-top-right-radius: 10px;
+  }
+
+  .statusButtons button:nth-of-type(3) {
+    border-bottom-left-radius: 10px;
+  }
+
+  .statusButtons button:nth-of-type(4) {
+    border-bottom-right-radius: 10px;
+    border-top-right-radius: 0;
+  }
+
+  .links {
+    width: 340px;
+  }
+
+  .title {
+    margin-top: 10px;
+  }
+
+  .date {
+    font-size: 13px;
+    top: 10px;
+    right: 10px;
+  }
+
+  .user_date {
+    right: auto;
+    left: auto;
+    top: 0;
+    position: relative;
+    justify-content: center;
+    margin-bottom: 0;
+    font-size: 15px;
+  }
+
+  .cancel,
+  .refund {
+    position: relative;
+    margin-top: 30px;
+  }
+}

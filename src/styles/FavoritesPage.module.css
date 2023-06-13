@@ -1,4 +1,3 @@
-/* Стили для основного контейнера страницы */
 .page {
   display: flex;
   flex-wrap: wrap;
@@ -6,142 +5,12 @@
   margin: 50px 0;
 }
 
-/* Стили для текста, который появляется, если избранное пусто */
 .empty {
   font-size: 1.2rem;
   color: #777;
   text-align: center;
 }
 
-/* Стили для блока с продуктом */
-.product-card {
-  background-color: #fff;
-  border-radius: 10px;
-  box-shadow: 0px 2px 5px rgba(0, 0, 0, 0.1);
-  margin: 20px;
-  padding: 20px;
-  width: 300px;
-}
-
-/* Стили для изображения продукта */
-.product-image {
-  height: 200px;
-  width: 100%;
-  object-fit: cover;
-  border-radius: 5px;
-  margin-bottom: 10px;
-}
-
-/* Стили для названия продукта */
-.product-name {
-  font-size: 1.2rem;
-  font-weight: bold;
-  margin-bottom: 10px;
-}
-
-/* Стили для цены продукта */
-.product-price {
-  font-size: 1rem;
-  color: #777;
-  margin-bottom: 10px;
-}
-
-/* Стили для кнопки добавления в избранное */
-.fav-button {
-  border: none;
-  background-color: transparent;
-  color: #f44336;
-  font-size: 1.2rem;
-  cursor: pointer;
-}
-
-/* Стили для кнопки удаления из избранного */
-.unfav-button {
-  border: none;
-  background-color: transparent;
-  color: #777;
-  font-size: 1.2rem;
-  cursor: pointer;
-}
-
-/* Стили для кнопки в основном контейнере */
-.page-button {
-  background-color: #f44336;
-  border: none;
-  border-radius: 5px;
-  color: #fff;
-  cursor: pointer;
-  font-size: 1.2rem;
-  padding: 10px 20px;
-  transition: background-color 0.2s ease-in-out;
-}
-
-.page-button:hover {
-  background-color: #d32f2f;
-}
-
-/* Стили для навигационного меню */
-.navbar {
-  background-color: #fff;
-  box-shadow: 0px 2px 5px rgba(0, 0, 0, 0.1);
-  display: flex;
-  justify-content: space-between;
-  align-items: center;
-  padding: 20px;
-}
-
-/* Стили для логотипа */
-.logo {
-  font-size: 1.5rem;
-  font-weight: bold;
-  color: #f44336;
-  text-transform: uppercase;
-  letter-spacing: 2px;
-}
-
-/* Стили для элементов навигационного меню */
-.nav-item {
-  margin-left: 20px;
-  font-size: 1.2rem;
-  color: #333;
-  text-decoration: none;
-  transition: color 0.2s ease-in-out;
-}
-
-.nav-item:hover {
-  color: #f44336;
-}
-
-/* Стили для футера */
-.footer {
-  background-color: #333;
-  color: #fff;
-  padding: 50px;
-  text-align: center;
-}
-
-/* Стили для заголовка футера */
-.footer-title {
-  font-size: 1.5rem;
-  font-weight: bold;
-  text-transform: uppercase;
-  letter-spacing: 2px;
-  margin-bottom: 20px;
-}
-
-/* Стили для текста футера */
-.footer-text {
-  font-size: 1rem;
-  margin-bottom: 20px;
-}
-
-/* Стили для ссылок в футере */
-.footer-link {
-  color: #fff;
-  text-decoration: none;
-  transition: color 0.2s ease-in-out;
-}
-
-.footer-link:hover {
-  color: #f44336;
+.item {
+  margin: 30px 2px 30px 40px;
 }

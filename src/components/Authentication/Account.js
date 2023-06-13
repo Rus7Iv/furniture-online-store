@@ -1,8 +1,8 @@
 import React, { useState, useEffect } from "react";
-import { auth } from "../../lib/firebase";
 import Link from "next/link";
-import styles from "../../styles/Account.module.css";
+import { auth } from "../../lib/firebase";
 import { MotionButtonIcons } from "../MotionButton/MotionButtonIcons";
+import styles from "../Authentication/styles/Account.module.css";
 
 const Account = () => {
   const [error, setError] = useState(null);
@@ -48,10 +48,23 @@ const Account = () => {
         />
         <MotionButtonIcons href={"/orders"} icons={"📝"} text={"Заказы"} />
       </div>
-
-      <button className={`${styles.logoutButton} btns`} onClick={handleLogout}>
-        Выйти
-      </button>
+      <div
+        style={{
+          display: "flex",
+          flexDirection: "column",
+          alignItems: "center",
+        }}
+      >
+        <button
+          className={`${styles.logoutButton} btns`}
+          onClick={handleLogout}
+        >
+          Выйти
+        </button>
+        <Link href={"/settings"} className={styles.settings}>
+          Настройки аккаунта
+        </Link>
+      </div>
 
       {error && <p className={styles.error}>{error}</p>}
     </main>
