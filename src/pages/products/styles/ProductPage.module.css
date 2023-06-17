@@ -47,15 +47,6 @@
   display: inline-block;
 }
 
-@keyframes spin {
-  0% {
-    transform: rotate(0deg);
-  }
-  100% {
-    transform: rotate(360deg);
-  }
-}
-
 .carousel {
   width: 550px;
   height: 400px;
